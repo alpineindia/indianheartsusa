@@ -1,5 +1,5 @@
 import { headers } from 'next/headers'
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { sendSubscriptionEmail } from '@/lib/resend'
 import { notifyAdminPayment } from '@/lib/twilio'
@@ -12,10 +12,11 @@ export async function POST(request: Request) {
 
   if (!signature) return Response.json({ error: 'No signature' }, { status: 400 })
 
-  let event: ReturnType<typeof stripe.webhooks.constructEvent> | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let event: any
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!)
+    event = getStripe().webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!)
   } catch {
     return Response.json({ error: 'Invalid signature' }, { status: 400 })
   }

@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { stripe, TIER_PRICES } from '@/lib/stripe'
+import { getStripe, TIER_PRICES } from '@/lib/stripe'
 import { getSession } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
 import type { MembershipTier } from '@/generated/prisma/client'
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   let customerId = user.stripeCustomerId
 
   if (!customerId) {
-    const customer = await stripe.customers.create({
+    const customer = await getStripe().customers.create({
       email: user.email,
       metadata: { userId: user.id },
     })
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
 
   const priceData = TIER_PRICES[tier as keyof typeof TIER_PRICES]
 
-  const checkoutSession = await stripe.checkout.sessions.create({
+  const checkoutSession = await getStripe().checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
     line_items: [{
