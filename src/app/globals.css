@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fffdf7;
+  --foreground: #1a0a00;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --gold-dark: #8b6914;
+  --maroon: #800020;
+  --maroon-light: #a0002a;
+  --cream: #fff8e7;
+  --cream-dark: #f5ecd4;
+  --border: #e8d5a3;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-maroon: var(--maroon);
+  --color-maroon-light: var(--maroon-light);
+  --color-cream: var(--cream);
+  --color-cream-dark: var(--cream-dark);
+  --color-border-gold: var(--border);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* Traditional border ornament */
+.border-ornament {
+  border-image: repeating-linear-gradient(
+    90deg,
+    #c9a84c 0px,
+    #c9a84c 4px,
+    transparent 4px,
+    transparent 8px,
+    #800020 8px,
+    #800020 12px,
+    transparent 12px,
+    transparent 16px
+  ) 4;
+}
+
+/* Gold gradient */
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #c9a84c 0%, #e8c96a 50%, #c9a84c 100%);
+}
+
+.bg-maroon-gradient {
+  background: linear-gradient(135deg, #800020 0%, #a0002a 50%, #800020 100%);
+}
+
+/* Traditional card */
+.traditional-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
