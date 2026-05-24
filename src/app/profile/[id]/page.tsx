@@ -14,9 +14,10 @@ async function getProfile(id: string) {
   })
 }
 
-export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function ProfilePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ interest?: string }> }) {
+  const [{ id }, sp] = await Promise.all([params, searchParams])
   const [session, profile] = await Promise.all([getSession(), getProfile(id)])
+  const interestStatus = sp.interest
 
   if (!profile || profile.user.status !== 'APPROVED') notFound()
 
@@ -78,12 +79,24 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
               {/* Actions */}
               {isLoggedIn && session.userId !== profile.user.id && (
                 <div className="space-y-2">
-                  <form action={`/api/interests`} method="POST">
-                    <input type="hidden" name="receiverId" value={profile.user.id} />
-                    <button type="submit" className="w-full py-2.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 text-white" style={{ background: 'var(--maroon)' }}>
-                      <Heart className="w-4 h-4" /> Send Interest
-                    </button>
-                  </form>
+                  {interestStatus === 'sent' && (
+                    <div className="p-3 rounded-lg text-sm text-center font-medium" style={{ background: '#dcfce7', color: '#166534' }}>
+                      ✓ Interest sent successfully!
+                    </div>
+                  )}
+                  {interestStatus === 'already_sent' && (
+                    <div className="p-3 rounded-lg text-sm text-center font-medium" style={{ background: '#fef9c3', color: '#854d0e' }}>
+                      You already sent interest to this profile.
+                    </div>
+                  )}
+                  {!interestStatus && (
+                    <form action="/api/interests" method="POST">
+                      <input type="hidden" name="receiverId" value={profile.user.id} />
+                      <button type="submit" className="w-full py-2.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 text-white" style={{ background: 'var(--maroon)' }}>
+                        <Heart className="w-4 h-4" /> Send Interest
+                      </button>
+                    </form>
+                  )}
                   <Link href={`/dashboard/messages?to=${profile.user.id}`} className="w-full py-2.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 border" style={{ borderColor: 'var(--maroon)', color: 'var(--maroon)' }}>
                     <MessageCircle className="w-4 h-4" /> Send Message
                   </Link>
