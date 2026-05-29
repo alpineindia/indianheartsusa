@@ -20,7 +20,7 @@ export default function Navbar({ isLoggedIn, isAdmin }: NavbarProps) {
           <Heart className="w-7 h-7 text-red-300" fill="currentColor" />
           <div>
             <span className="text-white text-xl font-bold block leading-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
-              IndianHearts
+              Maangalya
             </span>
             <span className="text-xs leading-tight block" style={{ color: 'var(--gold-light)' }}>USA Matrimonial</span>
           </div>
@@ -57,7 +57,7 @@ export default function Navbar({ isLoggedIn, isAdmin }: NavbarProps) {
                 className="px-4 py-2 rounded text-sm font-semibold transition-colors"
                 style={{ background: 'var(--gold)', color: 'var(--maroon)' }}
               >
-                Register Free
+                Register
               </Link>
             </>
           )}
@@ -82,7 +82,7 @@ export default function Navbar({ isLoggedIn, isAdmin }: NavbarProps) {
             ) : (
               <>
                 <Link href="/login" onClick={() => setOpen(false)}>Login</Link>
-                <Link href="/register" onClick={() => setOpen(false)} className="font-semibold" style={{ color: 'var(--gold)' }}>Register Free</Link>
+                <Link href="/register" onClick={() => setOpen(false)} className="font-semibold" style={{ color: 'var(--gold)' }}>Register</Link>
               </>
             )}
           </nav>

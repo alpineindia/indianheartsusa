@@ -15,13 +15,10 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <Heart className="w-6 h-6 text-red-300" fill="currentColor" />
-            <span className="text-white text-lg font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>IndianHearts USA</span>
+            <span className="text-white text-lg font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Maangalya USA</span>
           </div>
-          <p className="text-sm opacity-80 mb-4">
-            The trusted NRI matrimonial platform for Indian Americans. Find your perfect life partner.
-          </p>
           <div className="flex flex-col gap-2 text-sm opacity-70">
-            <span className="flex items-center gap-2"><Phone className="w-4 h-4" /> +1 (800) 555-0000</span>
+            <span className="flex items-center gap-2"><Phone className="w-4 h-4" /> +1 321 332 5820</span>
             <span className="flex items-center gap-2"><Mail className="w-4 h-4" /> support@indianheartsusa.com</span>
           </div>
         </div>
@@ -59,7 +56,7 @@ export default function Footer() {
           <h4 className="font-semibold mb-3" style={{ color: 'var(--gold-light)' }}>Quick Links</h4>
           <ul className="space-y-1 text-sm opacity-80">
             {[
-              ['Register Free', '/register'],
+              ['Register', '/register'],
               ['Login', '/login'],
               ['Membership Plans', '/membership'],
               ['Success Stories', '/success-stories'],
@@ -76,7 +73,7 @@ export default function Footer() {
       </div>
 
       <div style={{ borderTop: '1px solid rgba(201,168,76,0.3)' }} className="py-4 text-center text-xs opacity-60">
-        <p>© {new Date().getFullYear()} IndianHearts USA. All rights reserved. | NRI Matrimonial Platform</p>
+        <p>© {new Date().getFullYear()} Maangalya USA. All rights reserved. | NRI Matrimonial Platform</p>
       </div>
     </footer>
   )

@@ -30,216 +30,6 @@ async function getRecentStories() {
   })
 }
 
-function ElephantSVG({ s }: { s: string }) {
-  return (
-    <svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg" width="380" height="560">
-      <defs>
-        <radialGradient id={`sk${s}`} cx="45%" cy="38%" r="58%">
-          <stop offset="0%" stopColor="#8a8ea8"/><stop offset="55%" stopColor="#52566a"/><stop offset="100%" stopColor="#2e3045"/>
-        </radialGradient>
-        <linearGradient id={`gd${s}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#ffe56a"/><stop offset="50%" stopColor="#c9a84c"/><stop offset="100%" stopColor="#8a6018"/>
-        </linearGradient>
-        <linearGradient id={`tk${s}`} x1="0%" y1="0%" x2="100%" y2="60%">
-          <stop offset="0%" stopColor="#f5f0d8"/><stop offset="100%" stopColor="#c8c099"/>
-        </linearGradient>
-        <linearGradient id={`ub${s}`} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#e03030"/><stop offset="100%" stopColor="#8a0010"/>
-        </linearGradient>
-        <linearGradient id={`hw${s}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#e8c84a"/><stop offset="50%" stopColor="#c9a84c"/><stop offset="100%" stopColor="#9a7820"/>
-        </linearGradient>
-        <linearGradient id={`pu${s}`} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#7a20cc"/><stop offset="100%" stopColor="#3a0860"/>
-        </linearGradient>
-        <filter id={`sh${s}`}><feDropShadow dx="3" dy="5" stdDeviation="7" floodColor="#00000055"/></filter>
-        <clipPath id={`cc${s}`}>
-          <path d="M 120 268 Q 240 232 360 268 Q 378 316 378 354 Q 350 404 240 410 Q 130 410 102 354 Q 98 316 120 268 Z"/>
-        </clipPath>
-      </defs>
-
-      {/* ── UMBRELLA ── */}
-      <line x1="240" y1="44" x2="240" y2="175" stroke={`url(#gd${s})`} strokeWidth="6"/>
-      <path d="M 136 92 Q 148 16 240 10 Q 332 16 344 92 Q 308 76 240 74 Q 172 76 136 92 Z" fill={`url(#ub${s})`}/>
-      <path d="M 136 92 Q 148 16 240 10 Q 332 16 344 92" fill="none" stroke={`url(#gd${s})`} strokeWidth="4"/>
-      {/* wavy gold stripe across dome */}
-      <path d="M 152 66 Q 184 54 216 66 Q 248 78 280 66 Q 312 54 344 68" fill="none" stroke="#f8e472" strokeWidth="2" opacity="0.5"/>
-      <ellipse cx="240" cy="12" rx="16" ry="11" fill={`url(#gd${s})`}/>
-      <circle cx="240" cy="3" r="5" fill="#c9a84c"/>
-      {/* Fringe */}
-      {[144,162,180,198,216,234,252,270,288,306,324,338].map((x,i)=>(
-        <g key={i}>
-          <line x1={x} y1={90} x2={x+(i%2?2:-2)} y2={108} stroke="#c9a84c" strokeWidth="2.2"/>
-          <circle cx={x+(i%2?2:-2)} cy={111} r="4" fill="#c9a84c"/>
-        </g>
-      ))}
-      {[140,158,176,194,212,230,248,266,284,302,320,340].map((x,i)=>(
-        <line key={i} x1={x} y1={91} x2={x+(i%3===1?3:i%3===2?-3:0)} y2={112} stroke="#8030b0" strokeWidth="2.5" opacity="0.6"/>
-      ))}
-
-      {/* ── HOWDAH ── */}
-      <rect x="158" y="218" width="184" height="20" rx="5" fill={`url(#hw${s})`}/>
-      {[175,215,322,342].map((x,i)=>(
-        <rect key={i} x={x-5} y={148} width={10} height={72} rx="3" fill={`url(#gd${s})`}/>
-      ))}
-      <path d="M 152 153 Q 240 130 350 153 L 354 168 Q 240 145 149 168 Z" fill={`url(#hw${s})`}/>
-      <path d="M 152 153 Q 240 130 350 153" fill="none" stroke="#f8e472" strokeWidth="3"/>
-      {[168,188,208,228,248,268,288,308,328].map((x,i)=>(
-        <circle key={i} cx={x} cy={166} r="6.5" fill={i%2===0?"#ff8800":"#ffcc00"}/>
-      ))}
-      <rect x="170" y="168" width="168" height="52" fill="#cc2244" opacity="0.5"/>
-      <circle cx="240" cy="142" r="10" fill={`url(#gd${s})`}/>
-      {/* garland strings from howdah sides */}
-      {[0,1,2,3].map(i=>(<circle key={`gl${i}`} cx={172-i*2} cy={238+i*9} r="5.5" fill={i%2===0?"#ff8800":"#ffcc00"}/>))}
-      {[0,1,2,3].map(i=>(<circle key={`gr${i}`} cx={340+i*2} cy={238+i*9} r="5.5" fill={i%2===0?"#ff8800":"#ffcc00"}/>))}
-
-      {/* ── MAHOUT ── */}
-      <rect x="92" y="255" width="44" height="48" rx="8" fill="#cc2020"/>
-      <circle cx="114" cy="248" r="17" fill="#f5d8c0"/>
-      <ellipse cx="114" cy="238" rx="22" ry="11" fill="#cc2020"/>
-      <ellipse cx="114" cy="235" rx="17" ry="7.5" fill="#dd3333"/>
-      <circle cx="114" cy="232" r="5" fill="#c9a84c"/>
-      <circle cx="114" cy="232" r="3" fill="#cc2244"/>
-      <line x1="130" y1="260" x2="82" y2="330" stroke="#8a6018" strokeWidth="4" strokeLinecap="round"/>
-      <circle cx="82" cy="330" r="5" fill="#c9a84c"/>
-      <path d="M 100 302 Q 88 320 92 340" fill="none" stroke="#cc2020" strokeWidth="13" strokeLinecap="round"/>
-      <path d="M 128 302 Q 140 320 136 340" fill="none" stroke="#cc2020" strokeWidth="13" strokeLinecap="round"/>
-
-      {/* ── BODY ── */}
-      <ellipse cx="240" cy="375" rx="148" ry="102" fill={`url(#sk${s})`} filter={`url(#sh${s})`}/>
-
-      {/* tail */}
-      <path d="M 378 330 Q 402 358 400 392 Q 396 414 386 420" fill="none" stroke="#2e3045" strokeWidth="9" strokeLinecap="round"/>
-      <path d="M 378 330 Q 402 358 400 392 Q 396 414 386 420" fill="none" stroke="#52566a" strokeWidth="5" strokeLinecap="round"/>
-      <ellipse cx="384" cy="423" rx="8" ry="12" fill="#2e2e45" transform="rotate(-10,384,423)"/>
-
-      {/* painted body decoration */}
-      <path d="M 116 378 Q 104 360 116 344 Q 128 328 142 342 Q 156 356 144 372 Q 132 388 116 378 Z" fill="none" stroke="#3a8a30" strokeWidth="2.2" opacity="0.65"/>
-      {[0,60,120,180,240,300].map((deg,i)=>{
-        const cx=128+Math.round(Math.cos(deg*Math.PI/180)*8), cy=355+Math.round(Math.sin(deg*Math.PI/180)*8)
-        return <ellipse key={i} cx={cx} cy={cy} rx="4" ry="2.5" fill="#cc2244" opacity="0.6" transform={`rotate(${deg},${cx},${cy})`}/>
-      })}
-      <circle cx="128" cy="355" r="4" fill="#c9a84c" opacity="0.7"/>
-
-      {/* ── CAPARISON purple lower drape ── */}
-      <path d="M 108 358 Q 122 446 138 478 Q 184 490 240 488 Q 296 486 350 472 Q 368 432 372 360 Q 342 402 240 410 Q 138 410 108 358 Z" fill={`url(#pu${s})`} opacity="0.92"/>
-      <path d="M 108 358 Q 122 446 138 478 Q 184 490 240 488 Q 296 486 350 472 Q 368 432 372 360" fill="none" stroke={`url(#gd${s})`} strokeWidth="4"/>
-      {[144,164,184,204,224,244,264,284,304,324,344].map((x,i)=>(
-        <g key={i}><line x1={x} y1={484} x2={x} y2={498} stroke="#c9a84c" strokeWidth="2"/><circle cx={x} cy={500} r="4" fill="#c9a84c"/></g>
-      ))}
-      {[[155,464],[195,470],[235,474],[275,472],[315,466],[352,454]].map(([px,py],i)=>(
-        <g key={i}>
-          {[0,60,120,180,240,300].map((deg,j)=>{const cx2=px+Math.round(Math.cos(deg*Math.PI/180)*8),cy2=py+Math.round(Math.sin(deg*Math.PI/180)*8); return <ellipse key={j} cx={cx2} cy={cy2} rx="5" ry="3" fill="#cc2244" opacity="0.7" transform={`rotate(${deg},${cx2},${cy2})`}/>})}
-          <circle cx={px} cy={py} r="5" fill="#c9a84c"/>
-        </g>
-      ))}
-
-      {/* ── CAPARISON red/orange striped upper ── */}
-      <path d="M 120 268 Q 240 232 360 268 Q 378 316 378 354 Q 350 404 240 410 Q 130 410 102 354 Q 98 316 120 268 Z" fill="#c42020"/>
-      <g clipPath={`url(#cc${s})`}>
-        {[108,138,168,198,228,258,288,318,348,376].map((x,i)=>(
-          <rect key={i} x={x} y={230} width={16} height={192} fill="#ff8800" opacity="0.52"/>
-        ))}
-      </g>
-      <path d="M 120 268 Q 240 232 360 268 Q 378 316 378 354 Q 350 404 240 410 Q 130 410 102 354 Q 98 316 120 268 Z" fill="none" stroke={`url(#gd${s})`} strokeWidth="5"/>
-      <path d="M 128 276 Q 240 242 352 276 Q 369 318 369 352 Q 343 397 240 404 Q 137 404 111 352 Q 106 318 128 276 Z" fill="none" stroke="#c9a84c" strokeWidth="2" strokeDasharray="6,4" opacity="0.65"/>
-      {/* top marigold garland */}
-      <path d="M 120 268 Q 240 238 360 268" fill="none" stroke="#ff8800" strokeWidth="4"/>
-      {[126,150,174,198,220,240,262,285,308,332,356].map((x,i)=>(
-        <circle key={i} cx={x} cy={i%2?266:261} r="7" fill={i%2?"#ff8800":"#ffcc00"}/>
-      ))}
-      {/* jewels */}
-      {[[175,308],[215,292],[240,284],[278,292],[322,307]].map(([px,py],i)=>(
-        <g key={i}>
-          <circle cx={px} cy={py} r="10" fill="#c9a84c"/>
-          <circle cx={px} cy={py} r="7" fill="#fff8e7"/>
-          <circle cx={px} cy={py} r="4" fill={["#cc2244","#2244cc","#22aa44","#cc8800","#cc2244"][i]}/>
-          <circle cx={px} cy={py} r="1.8" fill="#fff"/>
-        </g>
-      ))}
-
-      {/* ── HEAD ── */}
-      <path d="M 46 285 Q 42 232 74 206 Q 108 180 150 192 Q 190 204 202 242 Q 214 278 196 312 Q 176 346 142 352 Q 104 358 76 334 Q 44 308 46 285 Z" fill={`url(#sk${s})`} filter={`url(#sh${s})`}/>
-      <ellipse cx="112" cy="224" rx="30" ry="20" fill="#8a8ea8" opacity="0.22"/>
-      {/* painted forehead */}
-      <path d="M 88 218 Q 78 202 96 194 Q 114 186 122 202 Q 130 218 112 226 Q 94 234 88 218 Z" fill="none" stroke="#22aa44" strokeWidth="2.2" opacity="0.75"/>
-      {[90,106,124,140,152,158].map((px,i)=>(
-        <circle key={i} cx={px} cy={[232,236,230,222,212,225][i]} r="3" fill="#c9a84c" opacity="0.7"/>
-      ))}
-
-      {/* ── EAR ── */}
-      <path d="M 52 250 Q 2 234 -10 282 Q -20 328 14 358 Q 42 382 76 368 Q 104 356 106 326 Q 108 296 90 272 Q 74 250 52 250 Z" fill={`url(#sk${s})`} filter={`url(#sh${s})`}/>
-      <path d="M 48 258 Q 8 246 0 284 Q -8 322 18 348 Q 44 368 72 356 Q 96 346 98 320 Q 100 294 84 273 Q 68 254 48 258 Z" fill="#c09090" opacity="0.38"/>
-      <path d="M 28 292 Q 14 282 16 302 Q 18 322 36 325 Q 54 328 56 306 Q 58 286 42 278 Q 26 270 28 292 Z" fill="none" stroke="#22aa44" strokeWidth="1.5" opacity="0.6"/>
-
-      {/* HEADBAND */}
-      <path d="M 58 306 Q 118 288 164 302" fill="none" stroke={`url(#gd${s})`} strokeWidth="9" strokeLinecap="round"/>
-      <path d="M 58 306 Q 118 288 164 302" fill="none" stroke="#fff8e7" strokeWidth="2.5" strokeLinecap="round"/>
-      {[[72,302],[114,289],[152,299]].map(([px,py],i)=>(
-        <g key={i}>
-          <circle cx={px} cy={py} r="6" fill="#c9a84c"/>
-          <circle cx={px} cy={py} r="4" fill={["#cc2244","#2244cc","#22aa44"][i]}/>
-          <circle cx={px} cy={py} r="1.8" fill="#fff" opacity="0.8"/>
-        </g>
-      ))}
-
-      {/* TILAK */}
-      <ellipse cx="106" cy="210" rx="15" ry="11" fill="#7a0018"/>
-      <ellipse cx="106" cy="210" rx="10" ry="7" fill={`url(#gd${s})`}/>
-      <ellipse cx="106" cy="210" rx="5.5" ry="4" fill="#cc1830"/>
-      <circle cx="106" cy="210" r="2" fill="#fff8e7"/>
-
-      {/* EYE */}
-      <ellipse cx="140" cy="265" rx="11" ry="9" fill="#180e04"/>
-      <ellipse cx="140" cy="265" rx="7" ry="5.8" fill="#241808"/>
-      <ellipse cx="137" cy="261" rx="3.5" ry="3" fill="#ffffff" opacity="0.65"/>
-      <path d="M 130 263 Q 140 256 150 264" fill="none" stroke="#100804" strokeWidth="2"/>
-
-      {/* TUSKS */}
-      <path d="M 124 328 Q 78 354 42 364 Q 6 374 -6 408 Q -14 430 2 440 Q 14 446 24 438" fill="none" stroke="#d8d5c2" strokeWidth="12" strokeLinecap="round"/>
-      <path d="M 124 328 Q 78 354 42 364 Q 6 374 -6 408 Q -14 430 2 440 Q 14 446 24 438" fill="none" stroke={`url(#tk${s})`} strokeWidth="8" strokeLinecap="round"/>
-      <ellipse cx="82" cy="352" rx="9" ry="5.5" fill="none" stroke={`url(#gd${s})`} strokeWidth="3.5" transform="rotate(25,82,352)"/>
-
-      {/* neck bells */}
-      {[[120,330],[140,320],[158,324]].map(([px,py],i)=>(
-        <g key={i}>
-          <line x1={px} y1={py} x2={px} y2={py+14} stroke="#c9a84c" strokeWidth="2"/>
-          <path d={`M ${px-6} ${py+14} Q ${px} ${py+24} ${px+6} ${py+14}`} fill="#c9a84c"/>
-          <ellipse cx={px} cy={py+10} rx="6" ry="9" fill="#c9a84c" opacity="0.8"/>
-        </g>
-      ))}
-
-      {/* TRUNK */}
-      <path d="M 116 350 Q 94 380 72 412 Q 50 448 44 484 Q 40 512 54 522" fill="none" stroke="#1e2038" strokeWidth="30" strokeLinecap="round"/>
-      <path d="M 116 350 Q 94 380 72 412 Q 50 448 44 484 Q 40 512 54 522" fill="none" stroke="#52566a" strokeWidth="24" strokeLinecap="round"/>
-      <path d="M 116 350 Q 94 380 72 412 Q 50 448 44 484 Q 40 512 54 522" fill="none" stroke="#6a6e84" strokeWidth="18" strokeLinecap="round"/>
-      <path d="M 114 350 Q 92 379 70 411 Q 48 446 42 482" fill="none" stroke="#8a8ea8" strokeWidth="5" strokeLinecap="round" opacity="0.4"/>
-      {[[94,396],[78,428],[60,462]].map(([px,py],i)=>(
-        <path key={i} d={`M ${px+12} ${py} Q ${px} ${py+7} ${px-12} ${py+2}`} fill="none" stroke="#2e3045" strokeWidth="2" opacity="0.4"/>
-      ))}
-      <ellipse cx="54" cy="524" rx="10" ry="7" fill="#3a3a50" transform="rotate(-15,54,524)"/>
-
-      {/* LEGS */}
-      {[
-        [145,432,38,32],[190,437,36,30],[310,442,36,30],[355,436,34,28]
-      ].map(([x,y,w,w2],i)=>(
-        <g key={i}>
-          <path d={`M ${x} ${y} Q ${x} ${y+34} ${x-1} ${y+64} Q ${x-2} ${y+80} ${x+8} ${y+84}`} fill="none" stroke="#1e2038" strokeWidth={w} strokeLinecap="round"/>
-          <path d={`M ${x} ${y} Q ${x} ${y+34} ${x-1} ${y+64} Q ${x-2} ${y+80} ${x+8} ${y+84}`} fill="none" stroke="#52566a" strokeWidth={w2} strokeLinecap="round"/>
-          <ellipse cx={x+2} cy={y+85} rx="20" ry="10" fill="#2e2e45"/>
-        </g>
-      ))}
-      {/* ankle bands */}
-      {[[140,464],[188,469],[308,470],[353,464]].map(([px,py],i)=>(
-        <ellipse key={i} cx={px} cy={py} rx="20" ry="6.5" fill={`url(#gd${s})`} opacity="0.95"/>
-      ))}
-      {/* toenails */}
-      {[[136,520],[146,522],[156,521],[186,519],[196,521],[205,520],[304,519],[314,521],[323,520],[349,518],[358,520],[367,518]].map(([px,py],i)=>(
-        <ellipse key={i} cx={px} cy={py} rx="4" ry="3" fill="#1e1e2e" opacity="0.7"/>
-      ))}
-    </svg>
-  )
-}
 
 export default async function HomePage() {
   const [session, featured, stats, stories] = await Promise.all([
@@ -278,15 +68,6 @@ export default async function HomePage() {
             </svg>
           </div>
 
-          {/* Left Elephant — facing RIGHT toward center */}
-          <div className="absolute left-0 top-0 hidden lg:block" style={{ width: 380, height: 560, opacity: 0.92, transform: 'scaleX(-1)' }} aria-hidden>
-            <ElephantSVG s="L" />
-          </div>
-
-          {/* Right Elephant — faces LEFT toward center */}
-          <div className="absolute right-0 top-0 hidden lg:block" style={{ width: 380, height: 560, opacity: 0.92 }} aria-hidden>
-            <ElephantSVG s="R" />
-          </div>
 
           <div style={{display:'none'}}>
             <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" width="300" height="400">
@@ -643,10 +424,6 @@ export default async function HomePage() {
               <span style={{ color: 'var(--gold-light)' }}>Life Partner in USA</span>
             </h1>
 
-            <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto" style={{ color: '#f5d0a0' }}>
-              The trusted NRI matrimonial platform for Indian Americans. Join thousands of Indian professionals finding their soulmate.
-            </p>
-
             {/* Search Widget */}
             <div
               style={{ background: 'rgba(255,248,231,0.97)', border: '2px solid var(--gold)', borderRadius: 12 }}
@@ -668,7 +445,7 @@ export default async function HomePage() {
                   ))}
                 </select>
                 <select name="ageMin" className="border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--gold)' }}>
-                  <option value="">Age from</option>
+                  <option value="">Age Range</option>
                   {Array.from({length: 30}, (_, i) => i + 21).map(a => (
                     <option key={a} value={a}>{a}</option>
                   ))}
@@ -689,7 +466,7 @@ export default async function HomePage() {
                 className="px-8 py-3 rounded-full font-semibold text-sm"
                 style={{ background: 'var(--gold)', color: 'var(--maroon)' }}
               >
-                Register Free
+                Register
               </Link>
               <Link
                 href="/browse"
