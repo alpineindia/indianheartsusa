@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
 
   const formData = await request.formData()
   const file = formData.get('file') as File | null
+  const type = formData.get('type') as string || 'photo'
 
   if (!file) return Response.json({ error: 'No file provided' }, { status: 400 })
   if (file.size > 10 * 1024 * 1024) return Response.json({ error: 'File too large (max 10MB)' }, { status: 400 })
@@ -21,13 +22,21 @@ export async function POST(request: NextRequest) {
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
 
+  let uploadOptions: any = {
+    folder: `matrimonial-usa/${session.userId}`,
+  }
+
+  if (type === 'horoscope') {
+    uploadOptions.resource_type = 'auto'
+    uploadOptions.folder += '/horoscope'
+  } else {
+    uploadOptions.resource_type = 'image'
+    uploadOptions.transformation = [{ width: 800, height: 1000, crop: 'limit', quality: 'auto' }]
+  }
+
   return new Promise<Response>((resolve) => {
     cloudinary.uploader.upload_stream(
-      {
-        folder: `matrimonial-usa/${session.userId}`,
-        resource_type: 'image',
-        transformation: [{ width: 800, height: 1000, crop: 'limit', quality: 'auto' }],
-      },
+      uploadOptions,
       (error, result) => {
         if (error || !result) {
           resolve(Response.json({ error: 'Upload failed' }, { status: 500 }))

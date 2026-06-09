@@ -178,6 +178,16 @@ export default async function ProfilePage({ params, searchParams }: { params: Pr
                   <p className="text-sm leading-relaxed opacity-80">{profile.aboutMe}</p>
                 </div>
               )}
+
+              {/* Horoscope */}
+              {profile.horoscopeUrl && isLoggedIn && (
+                <div className="traditional-card rounded-xl p-6">
+                  <h2 className="text-xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)', color: 'var(--maroon)' }}>Horoscope</h2>
+                  <a href={profile.horoscopeUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 rounded-lg font-semibold text-sm text-white" style={{ background: 'var(--maroon)' }}>
+                    📄 View Horoscope
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>

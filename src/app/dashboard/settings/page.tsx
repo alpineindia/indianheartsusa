@@ -68,6 +68,7 @@ export default async function ProfileSettingsPage() {
                 aboutMe: fd.get('aboutMe') as string || undefined,
                 familyType: fd.get('familyType') as string || undefined,
                 familyStatus: fd.get('familyStatus') as string || undefined,
+                horoscopeUrl: fd.get('horoscopeUrl') as string || undefined,
               })
               revalidatePath('/dashboard/settings')
             }}
@@ -153,6 +154,48 @@ export default async function ProfileSettingsPage() {
             <div className="traditional-card rounded-xl p-6">
               <h2 className="font-bold text-lg mb-4" style={{ fontFamily: 'var(--font-playfair)', color: 'var(--maroon)' }}>About Me</h2>
               <textarea name="aboutMe" defaultValue={profile.aboutMe ?? ''} rows={5} placeholder="Tell potential matches about yourself, your interests, values, and what you're looking for..." className="w-full border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--border)' }} />
+            </div>
+
+            {/* Horoscope */}
+            <div className="traditional-card rounded-xl p-6">
+              <h2 className="font-bold text-lg mb-4" style={{ fontFamily: 'var(--font-playfair)', color: 'var(--maroon)' }}>Horoscope (Optional)</h2>
+              <p className="text-xs opacity-60 mb-3">Upload your horoscope/birth chart as an image or PDF</p>
+              <div className="flex items-center gap-4">
+                <div className="flex-1">
+                  <label className="block text-xs font-medium opacity-60 mb-2">Horoscope File</label>
+                  <input
+                    id="horoscope-upload"
+                    type="file"
+                    accept="image/*,.pdf"
+                    className="w-full border rounded px-3 py-2 text-sm"
+                    style={{ borderColor: 'var(--border)' }}
+                    onChange={async (e) => {
+                      const file = e.currentTarget.files?.[0]
+                      if (!file) return
+                      const fd = new FormData()
+                      fd.append('file', file)
+                      fd.append('type', 'horoscope')
+                      try {
+                        const res = await fetch('/api/upload', { method: 'POST', body: fd })
+                        const data = await res.json()
+                        if (data.url) {
+                          const hiddenInput = document.getElementById('horoscope-url') as HTMLInputElement
+                          if (hiddenInput) hiddenInput.value = data.url
+                          alert('Horoscope uploaded successfully!')
+                        }
+                      } catch (err) {
+                        alert('Upload failed. Please try again.')
+                      }
+                    }}
+                  />
+                </div>
+                {profile.horoscopeUrl && (
+                  <a href={profile.horoscopeUrl} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold px-3 py-2 rounded border" style={{ borderColor: 'var(--maroon)', color: 'var(--maroon)' }}>
+                    View Current
+                  </a>
+                )}
+              </div>
+              <input type="hidden" id="horoscope-url" name="horoscopeUrl" value={profile.horoscopeUrl ?? ''} />
             </div>
 
             <button type="submit" className="w-full py-3 rounded-lg font-semibold text-sm text-white" style={{ background: 'var(--maroon)' }}>
