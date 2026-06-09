@@ -191,10 +191,11 @@ export default async function DashboardPage() {
           </div>
 
           {/* Quick Links */}
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4">
             {[
               { label: 'Messages', href: '/dashboard/messages', icon: '💬' },
               { label: 'Interests', href: '/dashboard/interests', icon: '💌' },
+              { label: 'Favorites', href: '/dashboard/favorites', icon: '❤️' },
               { label: 'Browse Profiles', href: '/browse', icon: '🔍' },
               { label: 'Upgrade Plan', href: '/membership', icon: '⭐' },
             ].map(({ label, href, icon }) => (

@@ -6,17 +6,22 @@ import Footer from '@/components/layout/Footer'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { getAge, maskPhone, formatLastActive } from '@/lib/utils'
+import FavoriteButton from '@/components/profile/FavoriteButton'
 
-async function getProfile(id: string) {
+async function getProfile(id: string, userId?: string) {
   return prisma.profile.findUnique({
     where: { id },
-    include: { user: { select: { id: true, status: true, membershipTier: true, phone: true, whatsapp: true, lastActiveAt: true } } },
+    include: {
+      user: { select: { id: true, status: true, membershipTier: true, phone: true, whatsapp: true, lastActiveAt: true } },
+      favoritedBy: userId ? { where: { userId }, select: { id: true } } : undefined,
+    },
   })
 }
 
 export default async function ProfilePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ interest?: string }> }) {
   const [{ id }, sp] = await Promise.all([params, searchParams])
-  const [session, profile] = await Promise.all([getSession(), getProfile(id)])
+  const session = await getSession()
+  const profile = await getProfile(id, session?.userId)
   const interestStatus = sp.interest
 
   if (!profile || profile.user.status !== 'APPROVED') notFound()
@@ -100,6 +105,7 @@ export default async function ProfilePage({ params, searchParams }: { params: Pr
                   <Link href={`/dashboard/messages?to=${profile.user.id}`} className="w-full py-2.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 border" style={{ borderColor: 'var(--maroon)', color: 'var(--maroon)' }}>
                     <MessageCircle className="w-4 h-4" /> Send Message
                   </Link>
+                  <FavoriteButton profileId={profile.id} isFavorited={(profile.favoritedBy?.length ?? 0) > 0} />
                 </div>
               )}
             </div>

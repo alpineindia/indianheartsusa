@@ -98,3 +98,24 @@ export async function updateProfile(data: Record<string, unknown>) {
   })
   revalidatePath('/dashboard')
 }
+
+export async function toggleFavorite(profileId: string) {
+  const session = await verifySession()
+
+  const existing = await prisma.favorite.findUnique({
+    where: { userId_profileId: { userId: session.userId, profileId } },
+  })
+
+  if (existing) {
+    await prisma.favorite.delete({ where: { id: existing.id } })
+  } else {
+    await prisma.favorite.create({
+      data: { userId: session.userId, profileId },
+    })
+  }
+
+  revalidatePath('/browse')
+  revalidatePath('/search')
+  revalidatePath('/dashboard/favorites')
+  revalidatePath('/profile/' + profileId)
+}
