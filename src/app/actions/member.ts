@@ -211,3 +211,45 @@ export async function submitSuccessStory(coupleNames: string, story: string, mar
 
   return { success: true }
 }
+
+export async function inviteFamilyManager(memberEmail: string, relation: string) {
+  const session = await verifySession()
+
+  const member = await prisma.user.findUnique({
+    where: { email: memberEmail },
+  })
+
+  if (!member) {
+    return { error: 'User not found' }
+  }
+
+  const existing = await prisma.familyManager.findUnique({
+    where: { managerUserId_memberId: { managerUserId: session.userId, memberId: member.id } },
+  })
+
+  if (existing) {
+    return { error: 'This person already has access to your profile' }
+  }
+
+  await prisma.familyManager.create({
+    data: {
+      managerUserId: session.userId,
+      memberId: member.id,
+      relation,
+    },
+  })
+
+  revalidatePath('/dashboard/family')
+  return { success: true }
+}
+
+export async function revokeFamilyManager(managerId: string) {
+  const session = await verifySession()
+
+  await prisma.familyManager.deleteMany({
+    where: { managerUserId: managerId, memberId: session.userId },
+  })
+
+  revalidatePath('/dashboard/family')
+  return { success: true }
+}

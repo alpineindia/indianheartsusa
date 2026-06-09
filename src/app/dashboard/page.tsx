@@ -224,7 +224,7 @@ export default async function DashboardPage() {
               { label: 'Interests', href: '/dashboard/interests', icon: '💌' },
               { label: 'Favorites', href: '/dashboard/favorites', icon: '❤️' },
               { label: 'Analytics', href: '/dashboard/analytics', icon: '📊' },
-              { label: 'Browse Profiles', href: '/browse', icon: '🔍' },
+              { label: 'Family', href: '/dashboard/family', icon: '👨‍👩‍👧' },
             ].map(({ label, href, icon }) => (
               <Link key={label} href={href} className="traditional-card rounded-lg p-4 text-center hover:shadow-md transition-shadow">
                 <div className="text-3xl mb-2">{icon}</div>

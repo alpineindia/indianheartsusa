@@ -72,6 +72,8 @@ model User {
   blockedBy         Block[] @relation("Blocked")
   reportsMade       Report[] @relation("Reporter")
   reportsReceived   Report[] @relation("Reported")
+  familyManagers    FamilyManager[] @relation("FamilyManagers")
+  managedBy         FamilyManager[] @relation("ManagedBy")
 }
 
 model Profile {
@@ -253,6 +255,17 @@ model Notification {
   payload   Json
   sentAt    DateTime?
   createdAt DateTime            @default(now())
+}
+
+model FamilyManager {
+  id            String   @id @default(cuid())
+  managerUserId String
+  memberId      String
+  relation      String
+  managerUser   User     @relation("FamilyManagers", fields: [managerUserId], references: [id], onDelete: Cascade)
+  member        User     @relation("ManagedBy", fields: [memberId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  @@unique([managerUserId, memberId])
 }
 
 model SiteConfig {
