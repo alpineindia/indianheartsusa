@@ -188,3 +188,26 @@ export async function reportUser(reportedId: string, reason: string, details?: s
   revalidatePath('/profile/' + reportedId)
   return { success: true }
 }
+
+export async function submitSuccessStory(coupleNames: string, story: string, marriedOn?: string) {
+  const session = await verifySession()
+
+  // Only APPROVED members can submit stories
+  const user = await prisma.user.findUnique({
+    where: { id: session.userId },
+  })
+
+  if (user?.status !== 'APPROVED') {
+    return { error: 'Only approved members can submit success stories.' }
+  }
+
+  await prisma.successStory.create({
+    data: {
+      coupleNames,
+      story,
+      marriedOn: marriedOn ? new Date(marriedOn) : undefined,
+    },
+  })
+
+  return { success: true }
+}

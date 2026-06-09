@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Users, Heart, Star, CheckCircle, ArrowRight, ChevronRight } from 'lucide-react'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import StoriesCarousel from '@/components/home/StoriesCarousel'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { getAge } from '@/lib/utils'
@@ -555,6 +556,9 @@ export default async function HomePage() {
             </div>
           </section>
         )}
+
+        {/* Success Stories Carousel */}
+        {stories.length > 0 && <StoriesCarousel stories={stories} />}
 
         {/* How It Works */}
         <section style={{ background: 'var(--cream)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }} className="py-12 px-4">

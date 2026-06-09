@@ -2,6 +2,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { getSession } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
+import SubmitStoryForm from '@/components/stories/SubmitStoryForm'
 
 async function getStories() {
   return prisma.successStory.findMany({
@@ -26,6 +27,8 @@ export default async function SuccessStoriesPage() {
         </div>
 
         <div className="max-w-4xl mx-auto px-4 py-12">
+          {session && session.status === 'APPROVED' && <SubmitStoryForm />}
+
           {stories.length === 0 ? (
             <p className="text-center opacity-50 py-16">No success stories yet. Be the first!</p>
           ) : (
