@@ -63,3 +63,27 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string) {
     html: `<p>Click the link below to reset your password. This link expires in 1 hour.</p><p><a href="${resetUrl}">Reset Password</a></p>`,
   })
 }
+
+export async function sendProfileViewedEmail(to: string, viewerName: string) {
+  return getResend().emails.send({
+    from: FROM, to,
+    subject: `${viewerName} viewed your profile on ${APP_NAME}`,
+    html: `<p><strong>${viewerName}</strong> viewed your profile on <strong>${APP_NAME}</strong>. Log in to view and connect!</p>`,
+  })
+}
+
+export async function sendMutualFavoriteEmail(to: string, favoriterName: string) {
+  return getResend().emails.send({
+    from: FROM, to,
+    subject: `🎉 Mutual Interest! ${favoriterName} saved your profile`,
+    html: `<p><strong>${favoriterName}</strong> has saved your profile as a favorite on <strong>${APP_NAME}</strong>! Check out their profile and see if it's a match.</p>`,
+  })
+}
+
+export async function sendInterestAcceptedEmail(to: string, acceptorName: string) {
+  return getResend().emails.send({
+    from: FROM, to,
+    subject: `Great news! ${acceptorName} accepted your interest`,
+    html: `<p><strong>${acceptorName}</strong> accepted your interest on <strong>${APP_NAME}</strong>! You can now message them to start a conversation.</p>`,
+  })
+}

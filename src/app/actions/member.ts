@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { verifySession } from '@/lib/dal'
-import { sendInterestEmail, sendMessageEmail } from '@/lib/resend'
+import { sendInterestEmail, sendMessageEmail, sendInterestAcceptedEmail, sendMutualFavoriteEmail } from '@/lib/resend'
 import { notifyNewInterest, notifyNewMessage } from '@/lib/twilio'
 
 export async function sendInterest(receiverId: string, message?: string) {
@@ -35,10 +35,17 @@ export async function sendInterest(receiverId: string, message?: string) {
 
 export async function respondToInterest(interestId: string, accept: boolean) {
   const session = await verifySession()
-  await prisma.interest.update({
+  const interest = await prisma.interest.update({
     where: { id: interestId, receiverId: session.userId },
     data: { status: accept ? 'ACCEPTED' : 'REJECTED' },
+    include: { sender: { include: { profile: true } } },
   })
+
+  if (accept && interest.sender) {
+    const senderName = `${interest.sender.profile?.firstName} ${interest.sender.profile?.lastName}`
+    await sendInterestAcceptedEmail(interest.sender.email, senderName).catch(console.error)
+  }
+
   revalidatePath('/dashboard')
 }
 
@@ -109,9 +116,26 @@ export async function toggleFavorite(profileId: string) {
   if (existing) {
     await prisma.favorite.delete({ where: { id: existing.id } })
   } else {
-    await prisma.favorite.create({
+    const newFav = await prisma.favorite.create({
       data: { userId: session.userId, profileId },
     })
+
+    // Check for mutual favorite
+    const mutualFav = await prisma.favorite.findUnique({
+      where: { userId_profileId: { userId: profileId, profileId: session.userId } },
+    })
+
+    if (mutualFav) {
+      const [user, favoriteUser] = await Promise.all([
+        prisma.user.findUnique({ where: { id: session.userId }, include: { profile: true } }),
+        prisma.user.findUnique({ where: { id: profileId }, include: { profile: true } }),
+      ])
+
+      if (user && favoriteUser) {
+        const userName = `${user.profile?.firstName} ${user.profile?.lastName}`
+        await sendMutualFavoriteEmail(favoriteUser.email, userName).catch(console.error)
+      }
+    }
   }
 
   revalidatePath('/browse')
