@@ -432,31 +432,47 @@ export default async function HomePage() {
               <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--maroon)', fontFamily: 'var(--font-playfair)' }}>
                 Find Your Match
               </h2>
-              <form action="/browse" method="GET" className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <select name="gender" className="border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--gold)', color: 'var(--foreground)' }}>
-                  <option value="">I am a...</option>
-                  <option value="MALE">Groom</option>
-                  <option value="FEMALE">Bride</option>
-                </select>
-                <select name="religion" className="border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--gold)' }}>
-                  <option value="">Religion</option>
-                  {['Hindu','Muslim','Christian','Sikh','Jain','Buddhist','Other'].map(r => (
-                    <option key={r} value={r}>{r}</option>
-                  ))}
-                </select>
-                <select name="ageMin" className="border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--gold)' }}>
-                  <option value="">Age Range</option>
-                  {Array.from({length: 30}, (_, i) => i + 21).map(a => (
-                    <option key={a} value={a}>{a}</option>
-                  ))}
-                </select>
-                <button
-                  type="submit"
-                  className="rounded px-4 py-2 text-sm font-semibold"
-                  style={{ background: 'var(--maroon)', color: 'white' }}
-                >
-                  Search
-                </button>
+              <form action="/browse" method="GET">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  <select name="gender" className="border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--gold)', color: 'var(--foreground)' }}>
+                    <option value="">I am a...</option>
+                    <option value="MALE">Groom</option>
+                    <option value="FEMALE">Bride</option>
+                  </select>
+                  <select name="religion" className="border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--gold)' }}>
+                    <option value="">Religion</option>
+                    {['Hindu','Muslim','Christian','Sikh','Jain','Buddhist','Other'].map(r => (
+                      <option key={r} value={r}>{r}</option>
+                    ))}
+                  </select>
+                  <select name="ageDifference" className="border rounded px-3 py-2 text-sm" style={{ borderColor: 'var(--gold)' }}>
+                    <option value="">Age Difference</option>
+                    <option value="1-2">1-2 years</option>
+                    <option value="2-3">2-3 years</option>
+                    <option value="3-4">3-4 years</option>
+                    <option value="4-5">4-5 years</option>
+                    <option value="5-6">5-6 years</option>
+                    <option value="6-7">6-7 years</option>
+                    <option value="7+">7+ years</option>
+                  </select>
+                  <button
+                    type="submit"
+                    className="rounded px-4 py-2 text-sm font-semibold"
+                    style={{ background: 'var(--maroon)', color: 'white' }}
+                  >
+                    Search
+                  </button>
+                </div>
+                <div className="flex gap-6 justify-center">
+                  <label className="flex items-center gap-2 cursor-pointer text-sm" style={{ color: 'var(--foreground)' }}>
+                    <input type="checkbox" name="ageDirectionYounger" defaultChecked className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                    Younger
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer text-sm" style={{ color: 'var(--foreground)' }}>
+                    <input type="checkbox" name="ageDirectionOlder" className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                    Older
+                  </label>
+                </div>
               </form>
             </div>
 
