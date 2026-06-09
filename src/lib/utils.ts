@@ -17,3 +17,62 @@ export function formatCurrency(amount: number) {
 export function maskPhone(phone: string) {
   return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 }
+
+export interface ProfileCompletenessResult {
+  score: number
+  percentage: number
+  missing: string[]
+}
+
+export function computeProfileCompleteness(profile: any): ProfileCompletenessResult {
+  const fields = [
+    { key: 'firstName', label: 'First Name' },
+    { key: 'lastName', label: 'Last Name' },
+    { key: 'dob', label: 'Date of Birth' },
+    { key: 'religion', label: 'Religion' },
+    { key: 'profession', label: 'Profession' },
+    { key: 'city', label: 'City' },
+    { key: 'state', label: 'State' },
+    { key: 'aboutMe', label: 'About You' },
+    { key: 'foodPreference', label: 'Food Preference' },
+    { key: 'height', label: 'Height' },
+    { key: 'education', label: 'Education' },
+    { key: 'motherTongue', label: 'Mother Tongue' },
+    { key: 'expectations', label: 'Expectations' },
+  ]
+
+  const photoCheck = { key: 'photoUrls', label: 'Profile Photo' }
+  const willingCheck = { key: 'willingToRelocate', label: 'Relocation Status' }
+
+  let completed = 0
+  const missing: string[] = []
+
+  for (const field of fields) {
+    if (profile[field.key]) {
+      completed++
+    } else {
+      missing.push(field.label)
+    }
+  }
+
+  if (profile.photoUrls && profile.photoUrls.length > 0) {
+    completed++
+  } else {
+    missing.push(photoCheck.label)
+  }
+
+  if (profile.willingToRelocate !== undefined && profile.willingToRelocate !== null) {
+    completed++
+  } else {
+    missing.push(willingCheck.label)
+  }
+
+  const totalFields = fields.length + 2
+  const percentage = Math.round((completed / totalFields) * 100)
+
+  return {
+    score: completed,
+    percentage,
+    missing,
+  }
+}

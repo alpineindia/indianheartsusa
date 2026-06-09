@@ -4,6 +4,7 @@ import { verifySession } from '@/lib/dal'
 import { prisma } from '@/lib/prisma'
 import { updateProfile } from '@/app/actions/member'
 import { revalidatePath } from 'next/cache'
+import { computeProfileCompleteness } from '@/lib/utils'
 
 const RELIGIONS = ['Hindu', 'Muslim', 'Christian', 'Sikh', 'Jain', 'Buddhist', 'Other']
 const US_STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
@@ -30,6 +31,28 @@ export default async function ProfileSettingsPage() {
         </div>
 
         <div className="max-w-3xl mx-auto px-4 py-8">
+          {/* Profile Completeness */}
+          {(() => {
+            const completeness = computeProfileCompleteness(profile)
+            return (
+              <div className="mb-6 traditional-card rounded-lg p-4 border" style={{ borderColor: 'var(--border)' }}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold" style={{ color: 'var(--maroon)' }}>Profile Strength</span>
+                  <span className="text-sm font-bold" style={{ color: 'var(--gold)' }}>{completeness.percentage}%</span>
+                </div>
+                <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.1)' }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-300"
+                    style={{
+                      width: `${completeness.percentage}%`,
+                      background: `linear-gradient(90deg, var(--gold), var(--maroon))`,
+                    }}
+                  />
+                </div>
+              </div>
+            )
+          })()}
+
           <form
             action={async (fd: FormData) => {
               'use server'

@@ -4,7 +4,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { verifySession } from '@/lib/dal'
 import { prisma } from '@/lib/prisma'
-import { getAge } from '@/lib/utils'
+import { getAge, computeProfileCompleteness } from '@/lib/utils'
 import { logout } from '@/app/actions/auth'
 
 async function getDashboardData(userId: string) {
@@ -62,6 +62,48 @@ export default async function DashboardPage() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Profile Completeness Card */}
+          {profile && (() => {
+            const completeness = computeProfileCompleteness(profile)
+            return (
+              <div className="mb-6 traditional-card rounded-lg p-6" style={{ border: '1px solid var(--border)' }}>
+                <h3 className="font-bold text-sm mb-3" style={{ color: 'var(--maroon)', fontFamily: 'var(--font-playfair)' }}>
+                  Profile Strength: {completeness.percentage}%
+                </h3>
+                <div className="w-full h-2 rounded-full overflow-hidden mb-4" style={{ background: 'rgba(0,0,0,0.1)' }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-300"
+                    style={{
+                      width: `${completeness.percentage}%`,
+                      background: `linear-gradient(90deg, var(--gold), var(--maroon))`,
+                    }}
+                  />
+                </div>
+                {completeness.missing.length > 0 ? (
+                  <div>
+                    <p className="text-xs opacity-60 mb-2">Complete these to boost your visibility:</p>
+                    <ul className="text-xs space-y-1">
+                      {completeness.missing.slice(0, 3).map((field) => (
+                        <li key={field} className="flex items-start gap-2">
+                          <span className="text-gray-400">→</span>
+                          <span>{field}</span>
+                        </li>
+                      ))}
+                      {completeness.missing.length > 3 && (
+                        <li className="text-gray-400">+ {completeness.missing.length - 3} more</li>
+                      )}
+                    </ul>
+                    <Link href="/dashboard/settings" className="mt-3 inline-block text-xs font-semibold" style={{ color: 'var(--maroon)' }}>
+                      Complete Profile →
+                    </Link>
+                  </div>
+                ) : (
+                  <p className="text-xs font-semibold" style={{ color: 'var(--maroon)' }}>✓ Your profile is complete!</p>
+                )}
+              </div>
+            )
+          })()}
+
           {/* Tier banner for FREE users */}
           {tier === 'FREE' && (
             <div className="mb-6 p-4 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4" style={{ background: 'var(--cream)', border: '2px solid var(--gold)' }}>
