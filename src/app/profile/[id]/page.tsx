@@ -26,6 +26,19 @@ export default async function ProfilePage({ params, searchParams }: { params: Pr
 
   if (!profile || profile.user.status !== 'APPROVED') notFound()
 
+  // Record profile view if viewer is different from profile owner
+  if (session && session.userId !== profile.user.id) {
+    await Promise.all([
+      prisma.profileView.create({
+        data: { viewerId: session.userId, profileId: id },
+      }).catch(() => {}),
+      prisma.profile.update({
+        where: { id },
+        data: { profileViews: { increment: 1 } },
+      }).catch(() => {}),
+    ])
+  }
+
   const canViewContact = session && (session.tier === 'PREMIUM' || session.tier === 'ELITE')
   const isLoggedIn = !!session
 
