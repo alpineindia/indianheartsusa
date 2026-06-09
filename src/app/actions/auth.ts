@@ -17,10 +17,18 @@ const RegisterSchema = z.object({
   gender: z.enum(['MALE', 'FEMALE']),
   dob: z.string(),
   religion: z.string().min(1),
+  profession: z.string().min(1),
+  displayPicture: z.enum(['yes', 'no']),
+  willingToRelocate: z.enum(['yes', 'no']),
+  foodPreference: z.string().min(1),
+  aboutYou: z.string().min(1),
   city: z.string().min(1),
   state: z.string().min(1),
   phone: z.string().optional(),
   whatsapp: z.string().optional(),
+  salary: z.string().optional(),
+  medicalConcerns: z.string().optional(),
+  expectations: z.string().optional(),
 })
 
 const LoginSchema = z.object({
@@ -41,7 +49,10 @@ export async function register(state: AuthFormState, formData: FormData): Promis
     return { errors: validated.error.flatten().fieldErrors }
   }
 
-  const { email, password, firstName, lastName, gender, dob, religion, city, state: userState, phone, whatsapp } = validated.data
+  const {
+    email, password, firstName, lastName, gender, dob, religion, city, state: userState, phone, whatsapp,
+    profession, salary, medicalConcerns, displayPicture, willingToRelocate, foodPreference, aboutYou, expectations
+  } = validated.data
 
   const existing = await prisma.user.findUnique({ where: { email } })
   if (existing) return { message: 'An account with this email already exists.' }
@@ -61,6 +72,14 @@ export async function register(state: AuthFormState, formData: FormData): Promis
           gender: gender as 'MALE' | 'FEMALE',
           dob: new Date(dob),
           religion,
+          profession,
+          salary,
+          medicalConcerns,
+          displayPicture: displayPicture === 'yes',
+          willingToRelocate: willingToRelocate === 'yes',
+          foodPreference,
+          aboutMe: aboutYou,
+          expectations,
           city,
           state: userState,
         },

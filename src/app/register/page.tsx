@@ -116,6 +116,62 @@ export default function RegisterPage() {
                     {RELIGIONS.map(r => <option key={r} value={r}>{r}</option>)}
                   </select>
                 </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Display your picture for everyone? *</label>
+                  <div className="flex gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="radio" name="displayPicture" value="yes" required className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                      <span className="text-sm">Yes</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="radio" name="displayPicture" value="no" className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                      <span className="text-sm">No</span>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Profession *</label>
+                  <input name="profession" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="e.g. Software Engineer" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Salary (Optional)</label>
+                  <input name="salary" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="e.g. $100,000 - $150,000" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Any Medical Concerns? (Optional)</label>
+                  <textarea name="medicalConcerns" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Describe any medical concerns..." rows={2} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Willing to Relocate? *</label>
+                  <div className="flex gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="radio" name="willingToRelocate" value="yes" required className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                      <span className="text-sm">Yes</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="radio" name="willingToRelocate" value="no" className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                      <span className="text-sm">No</span>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Food Preference *</label>
+                  <select name="foodPreference" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
+                    <option value="">Select preference</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="vegan-eggs">Vegan (prefers egg only)</option>
+                    <option value="non-vegetarian">Non-vegetarian</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">About You and Your Passion *</label>
+                  <textarea name="aboutYou" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Tell us about yourself and your passions..." rows={3} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">What are your Expectations? (Optional)</label>
+                  <textarea name="expectations" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Share your expectations about what you're looking for..." rows={3} />
+                </div>
                 <div className="flex gap-3">
                   <button type="button" onClick={() => setStep(1)} className="flex-1 py-3 rounded-lg font-semibold text-sm border" style={{ borderColor: 'var(--maroon)', color: 'var(--maroon)' }}>
                     Back

@@ -68,34 +68,41 @@ model User {
 }
 
 model Profile {
-  id            String   @id @default(cuid())
-  userId        String   @unique
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  firstName     String
-  lastName      String
-  gender        Gender
-  dob           DateTime
-  religion      String
-  caste         String?
-  motherTongue  String?
-  height        String?
-  maritalStatus String   @default("Never Married")
-  education     String?
-  occupation    String?
-  annualIncome  String?
-  city          String
-  state         String
-  country       String   @default("USA")
-  aboutMe       String?  @db.Text
-  familyType    String?
-  familyStatus  String?
-  horoscopeUrl  String?
-  photoUrls     String[]
-  videoUrl      String?
-  isFeatured    Boolean  @default(false)
-  profileViews  Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName           String
+  lastName            String
+  gender              Gender
+  dob                 DateTime
+  religion            String
+  caste               String?
+  motherTongue        String?
+  height              String?
+  maritalStatus       String   @default("Never Married")
+  education           String?
+  occupation          String?
+  profession          String?
+  annualIncome        String?
+  salary              String?
+  city                String
+  state               String
+  country             String   @default("USA")
+  aboutMe             String?  @db.Text
+  expectations        String?  @db.Text
+  medicalConcerns     String?  @db.Text
+  familyType          String?
+  familyStatus        String?
+  horoscopeUrl        String?
+  photoUrls           String[]
+  videoUrl            String?
+  displayPicture      Boolean  @default(true)
+  willingToRelocate   Boolean  @default(true)
+  foodPreference      String?
+  isFeatured          Boolean  @default(false)
+  profileViews        Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model Preference {
