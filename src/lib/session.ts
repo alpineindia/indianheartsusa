@@ -2,6 +2,7 @@ import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import type { Role, UserStatus, MembershipTier } from '@/generated/prisma/client'
+import { prisma } from '@/lib/prisma'
 
 export type SessionPayload = {
   userId: string
@@ -62,6 +63,11 @@ export async function updateSession() {
   const session = cookieStore.get('session')?.value
   const payload = await decrypt(session)
   if (!session || !payload) return null
+
+  await prisma.user.update({
+    where: { id: payload.userId },
+    data: { lastActiveAt: new Date() },
+  }).catch(() => {})
 
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
   cookieStore.set('session', await encrypt({ ...payload, expiresAt }), {

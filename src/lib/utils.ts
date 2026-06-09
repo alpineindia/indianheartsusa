@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { differenceInYears } from 'date-fns'
+import { differenceInYears, differenceInDays, differenceInHours, formatDistanceToNow } from 'date-fns'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -75,4 +75,18 @@ export function computeProfileCompleteness(profile: any): ProfileCompletenessRes
     percentage,
     missing,
   }
+}
+
+export function formatLastActive(lastActiveAt: Date | null | undefined): string {
+  if (!lastActiveAt) return 'Never active'
+  const now = new Date()
+  const hoursAgo = differenceInHours(now, new Date(lastActiveAt))
+
+  if (hoursAgo < 1) return 'Active now'
+  if (hoursAgo < 24) return `Active ${hoursAgo}h ago`
+
+  const daysAgo = differenceInDays(now, new Date(lastActiveAt))
+  if (daysAgo < 7) return `Active ${daysAgo}d ago`
+
+  return formatDistanceToNow(new Date(lastActiveAt), { addSuffix: true })
 }

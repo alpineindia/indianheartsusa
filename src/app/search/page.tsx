@@ -4,7 +4,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
-import { getAge } from '@/lib/utils'
+import { getAge, formatLastActive } from '@/lib/utils'
 
 const RELIGIONS = ['Hindu', 'Muslim', 'Christian', 'Sikh', 'Jain', 'Buddhist', 'Other']
 const CASTES = ['Brahmin', 'Kshatriya', 'Vaishya', 'Agarwal', 'Patel', 'Jat', 'Khatri', 'Iyer', 'Iyengar', 'Nair', 'Reddy', 'Kamma', 'Naidu', 'Yadav', 'Shrimal', 'Other']
@@ -57,7 +57,7 @@ async function searchProfiles(params: SearchParams) {
     prisma.profile.findMany({
       where, skip, take: pageSize,
       orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }],
-      include: { user: { select: { membershipTier: true, id: true } } },
+      include: { user: { select: { membershipTier: true, id: true, lastActiveAt: true } } },
     }),
     prisma.profile.count({ where }),
   ])
@@ -272,6 +272,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                             <p>{profile.city}, {profile.state}</p>
                             {profile.occupation && <p className="truncate">{profile.occupation}</p>}
                             {profile.annualIncome && <p className="text-xs font-medium" style={{ color: 'var(--maroon)' }}>{profile.annualIncome}</p>}
+                            <p className="text-xs mt-1" style={{ color: 'var(--gold)' }}>🟢 {formatLastActive(profile.user.lastActiveAt)}</p>
                           </div>
                           <Link
                             href={session ? `/profile/${profile.id}` : '/login'}

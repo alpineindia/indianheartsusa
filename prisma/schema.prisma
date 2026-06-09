@@ -53,6 +53,7 @@ model User {
   stripeCustomerId String?
   phone            String?
   whatsapp         String?
+  lastActiveAt     DateTime?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 

@@ -4,7 +4,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
-import { getAge } from '@/lib/utils'
+import { getAge, formatLastActive } from '@/lib/utils'
 
 const RELIGIONS = ['Hindu', 'Muslim', 'Christian', 'Sikh', 'Jain', 'Buddhist', 'Other']
 const US_STATES = ['California', 'Texas', 'New York', 'New Jersey', 'Illinois', 'Georgia', 'Florida', 'Washington', 'Virginia', 'Maryland']
@@ -53,7 +53,7 @@ async function getProfiles(params: SearchParams) {
       skip,
       take: pageSize,
       orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }],
-      include: { user: { select: { membershipTier: true, id: true } } },
+      include: { user: { select: { membershipTier: true, id: true, lastActiveAt: true } } },
     }),
     prisma.profile.count({ where }),
   ])
@@ -186,6 +186,7 @@ export default async function BrowsePage({ searchParams }: { searchParams: Promi
                           <p>{profile.city}, {profile.state}</p>
                           {profile.education && <p>{profile.education}</p>}
                           {profile.occupation && <p>{profile.occupation}</p>}
+                          <p className="text-xs mt-1" style={{ color: 'var(--gold)' }}>🟢 {formatLastActive(profile.user.lastActiveAt)}</p>
                         </div>
                         {profile.aboutMe && (
                           <p className="mt-2 text-xs opacity-60 line-clamp-2">{profile.aboutMe}</p>

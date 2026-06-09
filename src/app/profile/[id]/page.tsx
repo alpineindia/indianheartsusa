@@ -5,12 +5,12 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
-import { getAge, maskPhone } from '@/lib/utils'
+import { getAge, maskPhone, formatLastActive } from '@/lib/utils'
 
 async function getProfile(id: string) {
   return prisma.profile.findUnique({
     where: { id },
-    include: { user: { select: { id: true, status: true, membershipTier: true, phone: true, whatsapp: true } } },
+    include: { user: { select: { id: true, status: true, membershipTier: true, phone: true, whatsapp: true, lastActiveAt: true } } },
   })
 }
 
@@ -123,6 +123,7 @@ export default async function ProfilePage({ params, searchParams }: { params: Pr
                     ['City', profile.city],
                     ['State', profile.state],
                     ['Country', profile.country],
+                    ['Last Active', formatLastActive(profile.user.lastActiveAt)],
                   ].map(([label, value]) => (
                     <div key={label}>
                       <span className="opacity-50 text-xs block">{label}</span>
