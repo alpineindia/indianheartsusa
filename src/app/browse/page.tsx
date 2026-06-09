@@ -20,13 +20,21 @@ type SearchParams = {
   page?: string
 }
 
-async function getProfiles(params: SearchParams) {
+async function getProfiles(params: SearchParams, userId?: string) {
   const page = Math.max(1, parseInt(params.page ?? '1'))
   const pageSize = 12
   const skip = (page - 1) * pageSize
 
+  // Get list of blocked user IDs
+  const blockedUsers = userId ? await prisma.block.findMany({
+    where: { blockerId: userId },
+    select: { blockedId: true },
+  }) : []
+  const blockedIds = blockedUsers.map(b => b.blockedId)
+
   const where: Record<string, unknown> = {
     user: { status: 'APPROVED' },
+    userId: { notIn: blockedIds },
   }
 
   if (params.gender) where.gender = params.gender
@@ -64,7 +72,7 @@ async function getProfiles(params: SearchParams) {
 export default async function BrowsePage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams
   const session = await getSession()
-  const { profiles, total, page, totalPages } = await getProfiles(params)
+  const { profiles, total, page, totalPages } = await getProfiles(params, session?.userId)
 
   return (
     <>

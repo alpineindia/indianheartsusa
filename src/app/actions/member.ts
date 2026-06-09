@@ -143,3 +143,48 @@ export async function toggleFavorite(profileId: string) {
   revalidatePath('/dashboard/favorites')
   revalidatePath('/profile/' + profileId)
 }
+
+export async function blockUser(blockedId: string) {
+  const session = await verifySession()
+
+  const existing = await prisma.block.findUnique({
+    where: { blockerId_blockedId: { blockerId: session.userId, blockedId } },
+  })
+
+  if (!existing) {
+    await prisma.block.create({
+      data: { blockerId: session.userId, blockedId },
+    })
+  }
+
+  revalidatePath('/browse')
+  revalidatePath('/search')
+  revalidatePath('/profile/' + blockedId)
+}
+
+export async function unblockUser(blockedId: string) {
+  const session = await verifySession()
+
+  await prisma.block.deleteMany({
+    where: { blockerId: session.userId, blockedId },
+  })
+
+  revalidatePath('/browse')
+  revalidatePath('/search')
+}
+
+export async function reportUser(reportedId: string, reason: string, details?: string) {
+  const session = await verifySession()
+
+  await prisma.report.create({
+    data: {
+      reporterId: session.userId,
+      reportedId,
+      reason,
+      details,
+    },
+  })
+
+  revalidatePath('/profile/' + reportedId)
+  return { success: true }
+}

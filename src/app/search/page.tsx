@@ -28,12 +28,22 @@ type SearchParams = {
   maritalStatus?: string; annualIncome?: string; education?: string; page?: string; sort?: string
 }
 
-async function searchProfiles(params: SearchParams) {
+async function searchProfiles(params: SearchParams, userId?: string) {
   const page = Math.max(1, parseInt(params.page ?? '1'))
   const pageSize = 12
   const skip = (page - 1) * pageSize
 
-  const where: Record<string, unknown> = { user: { status: 'APPROVED' } }
+  // Get list of blocked user IDs
+  const blockedUsers = userId ? await prisma.block.findMany({
+    where: { blockerId: userId },
+    select: { blockedId: true },
+  }) : []
+  const blockedIds = blockedUsers.map(b => b.blockedId)
+
+  const where: Record<string, unknown> = {
+    user: { status: 'APPROVED' },
+    userId: { notIn: blockedIds },
+  }
 
   if (params.gender) where.gender = params.gender
   if (params.religion) where.religion = params.religion
@@ -74,7 +84,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const session = await getSession()
   const searched = hasFilters(params)
   const { profiles, total, page, totalPages } = searched
-    ? await searchProfiles(params)
+    ? await searchProfiles(params, session?.userId)
     : { profiles: [], total: 0, page: 1, totalPages: 0 }
 
   return (

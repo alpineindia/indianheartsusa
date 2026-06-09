@@ -7,6 +7,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { getAge, maskPhone, formatLastActive } from '@/lib/utils'
 import FavoriteButton from '@/components/profile/FavoriteButton'
+import BlockReportButtons from '@/components/profile/BlockReportButtons'
 
 async function getProfile(id: string, userId?: string) {
   return prisma.profile.findUnique({
@@ -119,6 +120,7 @@ export default async function ProfilePage({ params, searchParams }: { params: Pr
                     <MessageCircle className="w-4 h-4" /> Send Message
                   </Link>
                   <FavoriteButton profileId={profile.id} isFavorited={(profile.favoritedBy?.length ?? 0) > 0} />
+                  <BlockReportButtons profileId={profile.id} />
                 </div>
               )}
             </div>
