@@ -90,3 +90,69 @@ export function formatLastActive(lastActiveAt: Date | null | undefined): string 
 
   return formatDistanceToNow(new Date(lastActiveAt), { addSuffix: true })
 }
+
+export interface MatchScoreResult {
+  score: number
+  percentage: number
+  reasons: string[]
+}
+
+export function computeMatchScore(myProfile: any, myPrefs: any, candidateProfile: any, candidateTier: string): MatchScoreResult {
+  let score = 0
+  const reasons: string[] = []
+
+  // Religion match (+20)
+  if (myPrefs?.religion?.includes(candidateProfile.religion) || candidateProfile.religion === myProfile.religion) {
+    score += 20
+    reasons.push('Religion match')
+  }
+
+  // State/Location match (+15)
+  if (candidateProfile.state === myProfile.state) {
+    score += 15
+    reasons.push('Same state')
+  }
+
+  // Age preference match (+20)
+  const candidateAge = differenceInYears(new Date(), new Date(candidateProfile.dob))
+  if (candidateAge >= (myPrefs?.ageMin || 21) && candidateAge <= (myPrefs?.ageMax || 45)) {
+    score += 20
+    reasons.push('Within age preference')
+  }
+
+  // Food preference compatibility (+10)
+  if (myProfile.foodPreference && candidateProfile.foodPreference) {
+    const vegetarianCompatible = ['vegetarian', 'vegan', 'vegan-eggs'].includes(myProfile.foodPreference) &&
+      ['vegetarian', 'vegan', 'vegan-eggs'].includes(candidateProfile.foodPreference)
+    const nonVegCompatible = myProfile.foodPreference === 'non-vegetarian' && candidateProfile.foodPreference === 'non-vegetarian'
+
+    if (vegetarianCompatible || nonVegCompatible) {
+      score += 10
+      reasons.push('Compatible food preference')
+    }
+  }
+
+  // Relocation willingness match (+10)
+  if (myProfile.willingToRelocate === candidateProfile.willingToRelocate) {
+    score += 10
+    reasons.push('Relocation preference match')
+  }
+
+  // Premium/Elite status (+5)
+  if (candidateTier !== 'FREE') {
+    score += 5
+    reasons.push(`${candidateTier} member`)
+  }
+
+  // Featured profile bonus (+5)
+  if (candidateProfile.isFeatured) {
+    score += 5
+    reasons.push('Featured profile')
+  }
+
+  const maxScore = 85
+  const percentage = Math.round((score / maxScore) * 100)
+
+  return { score, percentage, reasons }
+}
+

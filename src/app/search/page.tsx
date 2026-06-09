@@ -25,7 +25,7 @@ const US_STATES = [
 type SearchParams = {
   gender?: string; religion?: string; caste?: string; motherTongue?: string
   ageMin?: string; ageMax?: string; state?: string; city?: string
-  maritalStatus?: string; annualIncome?: string; education?: string; page?: string
+  maritalStatus?: string; annualIncome?: string; education?: string; page?: string; sort?: string
 }
 
 async function searchProfiles(params: SearchParams) {

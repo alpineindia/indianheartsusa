@@ -4,11 +4,11 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { verifySession } from '@/lib/dal'
 import { prisma } from '@/lib/prisma'
-import { getAge, computeProfileCompleteness } from '@/lib/utils'
+import { getAge, computeProfileCompleteness, computeMatchScore } from '@/lib/utils'
 import { logout } from '@/app/actions/auth'
 
 async function getDashboardData(userId: string) {
-  const [user, receivedInterests, sentInterests, unreadMessages, matches] = await Promise.all([
+  const [user, receivedInterests, sentInterests, unreadMessages, matches, preferences] = await Promise.all([
     prisma.user.findUnique({
       where: { id: userId },
       include: { profile: true, subscription: true },
@@ -18,11 +18,22 @@ async function getDashboardData(userId: string) {
     prisma.message.count({ where: { receiverId: userId, readAt: null } }),
     prisma.profile.findMany({
       where: { user: { status: 'APPROVED' }, userId: { not: userId } },
-      take: 4,
-      orderBy: { isFeatured: 'desc' },
+      take: 50,
+      orderBy: [{ isFeatured: 'desc' }, { createdAt: 'desc' }],
+      include: { user: { select: { membershipTier: true } } },
+    }),
+    prisma.preference.findUnique({
+      where: { userId },
     }),
   ])
-  return { user, receivedInterests, sentInterests, unreadMessages, matches }
+
+  // Score and sort matches
+  const scoredMatches = matches.map((match) => {
+    const matchScore = computeMatchScore(user?.profile, preferences, match, match.user.membershipTier)
+    return { ...match, matchScore }
+  }).sort((a, b) => b.matchScore.percentage - a.matchScore.percentage).slice(0, 6)
+
+  return { user, receivedInterests, sentInterests, unreadMessages, matches: scoredMatches }
 }
 
 export default async function DashboardPage() {
@@ -169,15 +180,31 @@ export default async function DashboardPage() {
                 Suggested Matches
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {matches.map((match) => (
-                  <div key={match.id} className="border rounded-lg p-4 flex gap-3 items-start" style={{ borderColor: 'var(--border)' }}>
+                {matches.map((match: any) => (
+                  <div key={match.id} className="border rounded-lg p-4 flex gap-3 items-start relative" style={{ borderColor: 'var(--border)' }}>
                     <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0" style={{ background: 'var(--cream-dark)', border: '1px solid var(--gold)' }}>
                       {match.gender === 'FEMALE' ? '👰' : '🤵'}
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p className="font-semibold text-sm" style={{ color: 'var(--maroon)' }}>{match.firstName}, {getAge(match.dob)}</p>
                       <p className="text-xs opacity-60">{match.religion} · {match.city}</p>
-                      <Link href={`/profile/${match.id}`} className="text-xs font-semibold mt-1 flex items-center gap-1" style={{ color: 'var(--maroon)' }}>
+                      {match.matchScore && (
+                        <div className="mt-1.5">
+                          <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.1)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{
+                                width: `${match.matchScore.percentage}%`,
+                                background: `linear-gradient(90deg, var(--gold), var(--maroon))`,
+                              }}
+                            />
+                          </div>
+                          <p className="text-xs font-semibold mt-0.5" style={{ color: 'var(--gold)' }}>
+                            {match.matchScore.percentage}% match
+                          </p>
+                        </div>
+                      )}
+                      <Link href={`/profile/${match.id}`} className="text-xs font-semibold mt-1.5 flex items-center gap-1" style={{ color: 'var(--maroon)' }}>
                         View <ArrowRight className="w-3 h-3" />
                       </Link>
                     </div>
