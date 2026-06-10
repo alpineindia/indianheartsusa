@@ -186,11 +186,12 @@
         }
 
         .hero-elephant {
-            width: 100px;
-            height: 100px;
-            color: var(--gold);
-            opacity: 0.8;
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            opacity: 0.9;
             animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
         }
 
         .hero-elephant.left {
@@ -199,6 +200,7 @@
 
         .hero-elephant.right {
             animation-delay: 0.5s;
+            transform: scaleX(-1);
         }
 
         @keyframes float {
@@ -870,11 +872,11 @@
             .hero h1 { font-size: 32px; }
             .hero-title-wrapper {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
             }
             .hero-elephant {
-                width: 70px;
-                height: 70px;
+                width: 90px;
+                height: 90px;
             }
             .search-form { grid-template-columns: 1fr; }
             .stats-content { grid-template-columns: 1fr 1fr; }
@@ -927,43 +929,9 @@
         <div class="hero-content">
             <div class="hero-subtitle">🎉 Find Love in America</div>
             <div class="hero-title-wrapper">
-                <svg class="hero-elephant left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Left facing elephant (trunk pointing right toward text) -->
-                    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <!-- Body -->
-                        <ellipse cx="100" cy="120" rx="45" ry="55" opacity="0.3"/>
-                        <!-- Head -->
-                        <circle cx="100" cy="60" r="30" opacity="0.4"/>
-                        <!-- Ear -->
-                        <ellipse cx="70" cy="70" rx="25" ry="40" opacity="0.35"/>
-                        <!-- Trunk curving right -->
-                        <path d="M 100 85 Q 115 95 120 115 Q 125 135 130 150" stroke-width="3" opacity="0.4"/>
-                        <!-- Tusk -->
-                        <path d="M 105 90 Q 120 100 128 110" stroke-width="2" opacity="0.3"/>
-                        <!-- Leg -->
-                        <line x1="85" y1="160" x2="85" y2="190" stroke-width="3" opacity="0.35"/>
-                        <line x1="110" y1="160" x2="110" y2="190" stroke-width="3" opacity="0.35"/>
-                    </g>
-                </svg>
+                <img src="/elephant.jpg" alt="Elephant" class="hero-elephant left">
                 <h1>Your Perfect Match Awaits</h1>
-                <svg class="hero-elephant right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Right facing elephant (trunk pointing left toward text) -->
-                    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <!-- Body -->
-                        <ellipse cx="100" cy="120" rx="45" ry="55" opacity="0.3"/>
-                        <!-- Head -->
-                        <circle cx="100" cy="60" r="30" opacity="0.4"/>
-                        <!-- Ear -->
-                        <ellipse cx="130" cy="70" rx="25" ry="40" opacity="0.35"/>
-                        <!-- Trunk curving left -->
-                        <path d="M 100 85 Q 85 95 80 115 Q 75 135 70 150" stroke-width="3" opacity="0.4"/>
-                        <!-- Tusk -->
-                        <path d="M 95 90 Q 80 100 72 110" stroke-width="2" opacity="0.3"/>
-                        <!-- Leg -->
-                        <line x1="90" y1="160" x2="90" y2="190" stroke-width="3" opacity="0.35"/>
-                        <line x1="115" y1="160" x2="115" y2="190" stroke-width="3" opacity="0.35"/>
-                    </g>
-                </svg>
+                <img src="/elephant.jpg" alt="Elephant" class="hero-elephant right">
             </div>
             <p class="hero-desc">Connect with like-minded singles from the Indian diaspora. 50,000+ members, 10,000+ success stories</p>
         </div>

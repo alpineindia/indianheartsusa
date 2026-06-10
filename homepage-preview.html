@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndianHearts USA - Find Your Perfect Match</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --maroon: #8B1538;
+            --gold: #C9A84C;
+            --cream: #F5F0E8;
+            --dark: #2d2d2d;
+            --light: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background: var(--maroon);
+            color: white;
+            padding: 12px 0;
+            font-size: 13px;
+        }
+
+        .top-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: var(--gold);
+            margin-right: 30px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* HEADER */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--maroon);
+            font-family: 'Georgia', serif;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--maroon);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--maroon);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6a0f2a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 21, 56, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--gold);
+            color: var(--maroon);
+        }
+
+        .btn-secondary:hover {
+            background: #b8933e;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--maroon) 0%, #6a0f2a 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-family: 'Georgia', serif;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #f5d0a0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* SEARCH SECTION */
+        .search-section {
+            background: white;
+            padding: 40px 20px;
+            margin: -30px 20px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-section h3 {
+            text-align: center;
+            color: var(--maroon);
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group select,
+        .form-group input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 5px rgba(201, 168, 76, 0.3);
+        }
+
+        /* STATS SECTION */
+        .stats-section {
+            background: var(--maroon);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .stats-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .stat-item h3 {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 16px;
+        }
+
+        /* FEATURES SECTION */
+        .features {
+            padding: 80px 20px;
+            background: #fafafa;
+        }
+
+        .features-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--maroon);
+            margin-bottom: 50px;
+            font-family: 'Georgia', serif;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(139, 21, 56, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: var(--maroon);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* SUCCESS STORIES */
+        .stories {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .stories-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .story-card {
+            background: var(--cream);
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 5px solid var(--gold);
+        }
+
+        .story-couple {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .story-text {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* CTA SECTION */
+        .cta {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8933e 100%);
+            color: var(--maroon);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .features-grid,
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .container-max {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div>
+                <a href="tel:+1234567890">📞 +1 (234) 567-890</a>
+                <a href="mailto:info@indianheartsusa.com">✉️ info@indianheartsusa.com</a>
+            </div>
+            <div>
+                <a href="#fb">Facebook</a>
+                <a href="#tw">Twitter</a>
+                <a href="#wa">WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">💒 Indian<span>Hearts</span> USA</a>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#stories">Success Stories</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn btn-secondary">Sign In</button>
+                <button class="btn btn-primary">Join Free</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Perfect Match</h1>
+            <p>Connect with compatible singles from the Indian diaspora across America</p>
+            <div class="hero-buttons">
+                <button class="btn btn-secondary">Browse Profiles</button>
+                <button class="btn btn-primary" style="background: white; color: var(--maroon);">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH SECTION -->
+    <div class="search-section">
+        <h3>Find Your Life Partner</h3>
+        <form class="search-form">
+            <div class="form-group">
+                <label>Looking for</label>
+                <select>
+                    <option>Groom</option>
+                    <option>Bride</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Religion</label>
+                <select>
+                    <option>Any</option>
+                    <option>Hindu</option>
+                    <option>Muslim</option>
+                    <option>Christian</option>
+                    <option>Sikh</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Age Range</label>
+                <select>
+                    <option>18-25</option>
+                    <option>25-30</option>
+                    <option>30-40</option>
+                    <option>40+</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Search Now</button>
+        </form>
+    </div>
+
+    <!-- STATS SECTION -->
+    <section class="stats-section">
+        <div class="stats-content">
+            <div class="stat-item">
+                <h3>50,000+</h3>
+                <p>Active Members</p>
+            </div>
+            <div class="stat-item">
+                <h3>10,000+</h3>
+                <p>Success Stories</p>
+            </div>
+            <div class="stat-item">
+                <h3>98%</h3>
+                <p>Verified Profiles</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Customer Support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features" id="features">
+        <div class="features-content">
+            <h2 class="section-title">Why Choose IndianHearts USA?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Matching</h3>
+                    <p>AI-powered compatibility algorithm matches you with perfect profiles based on interests and values</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>100% Safe & Secure</h3>
+                    <p>Verified profiles, privacy protection, and fraud detection for your peace of mind</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Easy Communication</h3>
+                    <p>Connect instantly with potential matches through messaging, voice calls, and video chats</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Premium Features</h3>
+                    <p>Exclusive access to analytics, priority matching, and featured listing for premium members</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍👩‍👧</div>
+                    <h3>Family Involvement</h3>
+                    <p>Invite family members to help manage your profile and participate in the matchmaking journey</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Detailed Profiles</h3>
+                    <p>Share horoscope, photos, preferences, and expectations for complete transparency</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUCCESS STORIES -->
+    <section class="stories" id="stories">
+        <div class="stories-content">
+            <h2 class="section-title">💑 Success Stories</h2>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <div class="story-couple">Raj & Priya</div>
+                    <div class="story-text">
+                        "We met through IndianHearts and immediately felt a connection. After 6 months of chatting, Raj proposed and we're now happily married! Thank you for bringing us together!"
+                    </div>
+                </div>
+                <div class="story-card">
+                    <div class="story-couple">Amit & Deepika</div>
+                    <div class="story-text">
+                        "As a busy professional, I didn't have time to meet anyone. This platform made it so easy to find someone with similar interests and values. Getting married next month!"
+                    </div>
+                </div>
+                <div class="story-card">
+                    <div class="story-couple">Arjun & Isha</div>
+                    <div class="story-text">
+                        "Long-distance never stopped us. The matching algorithm was spot-on, and we couldn't be happier. Best decision ever to join IndianHearts USA!"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta">
+        <div class="container-max">
+            <h2>Ready to Find Your Match?</h2>
+            <p>Join thousands of successful couples who found love through IndianHearts USA</p>
+            <button class="btn btn-primary">Join for Free Today</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 IndianHearts USA. All rights reserved.</p>
+        <p>
+            <a href="#privacy">Privacy Policy</a> |
+            <a href="#terms">Terms of Service</a> |
+            <a href="#contact">Contact Us</a>
+        </p>
+    </footer>
+
+</body>
+</html>
