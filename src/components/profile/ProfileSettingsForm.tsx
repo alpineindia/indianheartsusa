@@ -31,14 +31,16 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
   const [saved, setSaved] = useState(false)
   const photoInputRef = useRef<HTMLInputElement>(null)
 
-  async function uploadFile(file: File, type: 'photo' | 'horoscope'): Promise<string | null> {
+  async function uploadFile(file: File, type: 'photo' | 'horoscope'): Promise<string> {
     const fd = new FormData()
     fd.append('file', file)
     fd.append('type', type)
     const res = await fetch('/api/upload', { method: 'POST', body: fd })
-    if (!res.ok) return null
     const data = await res.json()
-    return data.url ?? null
+    if (!res.ok || !data.url) {
+      throw new Error(data.error || `HTTP ${res.status}`)
+    }
+    return data.url
   }
 
   async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -47,14 +49,11 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
     setPhotoUploading(true)
     try {
       const url = await uploadFile(file, 'photo')
-      if (url) {
-        setPhotoUrl(url)
-        await updateProfile({ photoUrl: url })
-      } else {
-        alert('Photo upload failed. Please try again.')
-      }
-    } catch {
-      alert('Photo upload failed. Please try again.')
+      setPhotoUrl(url)
+      await updateProfile({ photoUrl: url })
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err)
+      alert(`Photo upload failed: ${msg}`)
     } finally {
       setPhotoUploading(false)
     }
@@ -66,10 +65,10 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
     setHoroscopeUploading(true)
     try {
       const url = await uploadFile(file, 'horoscope')
-      if (url) setHoroscopeUrl(url)
-      else alert('Horoscope upload failed. Please try again.')
-    } catch {
-      alert('Horoscope upload failed. Please try again.')
+      setHoroscopeUrl(url)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err)
+      alert(`Horoscope upload failed: ${msg}`)
     } finally {
       setHoroscopeUploading(false)
     }
