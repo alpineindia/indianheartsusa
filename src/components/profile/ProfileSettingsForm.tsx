@@ -6,7 +6,7 @@ import { updateProfile } from '@/app/actions/member'
 const US_STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
 interface Profile {
-  photoUrl?: string | null
+  photoUrls?: string[] | null
   height?: string | null
   motherTongue?: string | null
   caste?: string | null
@@ -22,7 +22,7 @@ interface Profile {
 }
 
 export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
-  const [photoUrl, setPhotoUrl] = useState(profile.photoUrl ?? '')
+  const [photoUrl, setPhotoUrl] = useState(profile.photoUrls?.[0] ?? '')
   const [horoscopeUrl, setHoroscopeUrl] = useState(profile.horoscopeUrl ?? '')
   const [photoUploading, setPhotoUploading] = useState(false)
   const [horoscopeUploading, setHoroscopeUploading] = useState(false)
@@ -49,7 +49,7 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
     try {
       const url = await uploadFile(file, 'photo')
       setPhotoUrl(url)
-      await updateProfile({ photoUrl: url })
+      // Photo saved to state — will be persisted when user clicks Save Changes
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err)
       alert(`Photo upload failed: ${msg}`)
@@ -91,6 +91,7 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
       familyType: fd.get('familyType') as string || undefined,
       familyStatus: fd.get('familyStatus') as string || undefined,
       horoscopeUrl: horoscopeUrl || undefined,
+      ...(photoUrl ? { photoUrls: [photoUrl] } : {}),
     })
     setSaving(false)
     setSaved(true)
@@ -135,6 +136,9 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
               {photoUploading ? 'Uploading…' : photoUrl ? 'Change Photo' : 'Upload Photo'}
             </button>
             <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
+            {photoUrl && !photoUploading && (
+              <p className="text-xs mt-2 opacity-60">Photo ready — click <strong>Save Changes</strong> below to save.</p>
+            )}
           </div>
         </div>
       </div>
