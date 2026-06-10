@@ -6,7 +6,7 @@
  * Or: npx tsx scripts/generate-test-data.ts
  */
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../src/generated/prisma/client';
 import * as bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
