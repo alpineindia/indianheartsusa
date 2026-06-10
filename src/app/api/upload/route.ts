@@ -20,30 +20,26 @@ export async function POST(request: NextRequest) {
   if (file.size > 10 * 1024 * 1024) return Response.json({ error: 'File too large (max 10MB)' }, { status: 400 })
 
   const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
+  const base64 = Buffer.from(bytes).toString('base64')
+  const dataUri = `data:${file.type};base64,${base64}`
 
-  let uploadOptions: any = {
-    folder: `matrimonial-usa/${session.userId}`,
+  const uploadOptions: Record<string, unknown> = {
+    folder: type === 'horoscope'
+      ? `matrimonial-usa/${session.userId}/horoscope`
+      : `matrimonial-usa/${session.userId}`,
+    resource_type: type === 'horoscope' ? 'auto' : 'image',
   }
 
-  if (type === 'horoscope') {
-    uploadOptions.resource_type = 'auto'
-    uploadOptions.folder += '/horoscope'
-  } else {
-    uploadOptions.resource_type = 'image'
+  if (type !== 'horoscope') {
     uploadOptions.transformation = [{ width: 800, height: 1000, crop: 'limit', quality: 'auto' }]
   }
 
-  return new Promise<Response>((resolve) => {
-    cloudinary.uploader.upload_stream(
-      uploadOptions,
-      (error, result) => {
-        if (error || !result) {
-          resolve(Response.json({ error: 'Upload failed' }, { status: 500 }))
-          return
-        }
-        resolve(Response.json({ url: result.secure_url, publicId: result.public_id }))
-      }
-    ).end(buffer)
-  })
+  try {
+    const result = await cloudinary.uploader.upload(dataUri, uploadOptions)
+    return Response.json({ url: result.secure_url, publicId: result.public_id })
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[upload] Cloudinary error:', message)
+    return Response.json({ error: message }, { status: 500 })
+  }
 }
