@@ -53,16 +53,16 @@ export default function RegisterPage() {
 
           <form action={action} className="space-y-4">
             {/* Step 1: Account */}
-            {step === 1 && (
-              <>
+            <div className={step !== 1 ? 'hidden' : ''}>
+              <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Email Address *</label>
-                  <input name="email" type="email" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="you@example.com" />
+                  <input name="email" type="email" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="you@example.com" />
                   {state?.errors?.email && <p className="text-xs text-red-600 mt-1">{state.errors.email[0]}</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Password *</label>
-                  <input name="password" type="password" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Minimum 8 characters" />
+                  <input name="password" type="password" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Minimum 8 characters" />
                   {state?.errors?.password && <p className="text-xs text-red-600 mt-1">{state.errors.password[0]}</p>}
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -78,27 +78,27 @@ export default function RegisterPage() {
                 <button type="button" onClick={() => setStep(2)} className="w-full py-3 rounded-lg font-semibold text-sm flex items-center justify-center gap-2" style={{ background: 'var(--maroon)', color: 'white' }}>
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
-              </>
-            )}
+              </div>
+            </div>
 
             {/* Step 2: Personal */}
-            {step === 2 && (
-              <>
+            <div className={step !== 2 ? 'hidden' : ''}>
+              <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium mb-1">First Name *</label>
-                    <input name="firstName" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="First name" />
+                    <input name="firstName" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="First name" />
                     {state?.errors?.firstName && <p className="text-xs text-red-600 mt-1">{state.errors.firstName[0]}</p>}
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Last Name *</label>
-                    <input name="lastName" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Last name" />
+                    <input name="lastName" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Last name" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium mb-1">I am a *</label>
-                    <select name="gender" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
+                    <select name="gender" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
                       <option value="">Select</option>
                       <option value="MALE">Groom</option>
                       <option value="FEMALE">Bride</option>
@@ -106,12 +106,12 @@ export default function RegisterPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Date of Birth *</label>
-                    <input name="dob" type="date" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} />
+                    <input name="dob" type="date" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Religion *</label>
-                  <select name="religion" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
+                  <select name="religion" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
                     <option value="">Select religion</option>
                     {RELIGIONS.map(r => <option key={r} value={r}>{r}</option>)}
                   </select>
@@ -120,7 +120,7 @@ export default function RegisterPage() {
                   <label className="block text-sm font-medium mb-1">Display your picture for everyone? *</label>
                   <div className="flex gap-6">
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="displayPicture" value="yes" required className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                      <input type="radio" name="displayPicture" value="yes" className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
                       <span className="text-sm">Yes</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
@@ -131,7 +131,7 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Profession *</label>
-                  <input name="profession" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="e.g. Software Engineer" />
+                  <input name="profession" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="e.g. Software Engineer" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Salary (Optional)</label>
@@ -145,7 +145,7 @@ export default function RegisterPage() {
                   <label className="block text-sm font-medium mb-1">Willing to Relocate? *</label>
                   <div className="flex gap-6">
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="willingToRelocate" value="yes" required className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
+                      <input type="radio" name="willingToRelocate" value="yes" className="w-4 h-4" style={{ accentColor: 'var(--gold)' }} />
                       <span className="text-sm">Yes</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
@@ -156,7 +156,7 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Food Preference *</label>
-                  <select name="foodPreference" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
+                  <select name="foodPreference" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
                     <option value="">Select preference</option>
                     <option value="vegetarian">Vegetarian</option>
                     <option value="vegan">Vegan</option>
@@ -166,7 +166,7 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">About You and Your Passion *</label>
-                  <textarea name="aboutYou" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Tell us about yourself and your passions..." rows={3} />
+                  <textarea name="aboutYou" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="Tell us about yourself and your passions..." rows={3} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">What are your Expectations? (Optional)</label>
@@ -180,19 +180,19 @@ export default function RegisterPage() {
                     Next <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
-              </>
-            )}
+              </div>
+            </div>
 
             {/* Step 3: Location + Submit */}
-            {step === 3 && (
-              <>
+            <div className={step !== 3 ? 'hidden' : ''}>
+              <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">City *</label>
-                  <input name="city" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="e.g. New York" />
+                  <input name="city" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }} placeholder="e.g. New York" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">State *</label>
-                  <select name="state" required className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
+                  <select name="state" className="w-full border rounded-lg px-4 py-2.5 text-sm" style={{ borderColor: 'var(--border)' }}>
                     <option value="">Select state</option>
                     {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
@@ -210,8 +210,8 @@ export default function RegisterPage() {
                     {pending ? 'Submitting…' : 'Submit Profile'}
                   </button>
                 </div>
-              </>
-            )}
+              </div>
+            </div>
           </form>
 
           <p className="mt-4 text-center text-sm">
