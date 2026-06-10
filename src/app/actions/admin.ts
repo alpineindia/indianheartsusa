@@ -39,6 +39,12 @@ export async function suspendMember(userId: string) {
   revalidatePath('/admin/members')
 }
 
+export async function deleteMember(userId: string) {
+  await verifyAdmin()
+  await prisma.user.delete({ where: { id: userId } })
+  revalidatePath('/admin/members')
+}
+
 export async function changeMemberTier(userId: string, tier: MembershipTier) {
   await verifyAdmin()
   await prisma.user.update({ where: { id: userId }, data: { membershipTier: tier } })

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { approveMember, rejectMember, suspendMember, changeMemberTier, setFeaturedProfile } from '@/app/actions/admin'
+import DeleteMemberButton from '@/components/admin/DeleteMemberButton'
 import { getAge } from '@/lib/utils'
 import type { UserStatus, MembershipTier } from '@/generated/prisma/client'
 
@@ -106,7 +107,7 @@ export default async function AdminMembersPage({ searchParams }: { searchParams:
                 </td>
                 <td className="px-5 py-3">
                   <div className="flex flex-wrap gap-1">
-                    {user.status === 'PENDING' && (
+                    {user.status !== 'APPROVED' && (
                       <form action={async () => { 'use server'; await approveMember(user.id) }}>
                         <button type="submit" className="px-2 py-1 rounded text-xs font-medium text-white bg-green-600">Approve</button>
                       </form>
@@ -131,6 +132,7 @@ export default async function AdminMembersPage({ searchParams }: { searchParams:
                     <Link href={`/profile/${user.profile?.id}`} className="px-2 py-1 rounded text-xs font-medium border" style={{ borderColor: 'var(--border)' }}>
                       View
                     </Link>
+                    <DeleteMemberButton userId={user.id} name={`${user.profile?.firstName ?? ''} ${user.profile?.lastName ?? ''}`.trim() || user.email} />
                   </div>
                 </td>
               </tr>
