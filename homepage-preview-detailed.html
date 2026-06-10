@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndianHearts USA - Find Your Perfect Match | Premium Matrimony Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --maroon: #8B1538;
+            --maroon-dark: #6a0f2a;
+            --gold: #C9A84C;
+            --gold-light: #d4b76a;
+            --cream: #F5F0E8;
+            --dark: #2d2d2d;
+            --light: #f9f9f9;
+            --text: #333;
+            --text-light: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: white;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button { border: none; cursor: pointer; }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: var(--maroon);
+            color: white;
+            padding: 10px 0;
+            font-size: 13px;
+        }
+
+        .top-bar-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            gap: 25px;
+        }
+
+        .top-bar a {
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== HEADER/NAV ===== */
+        header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--maroon);
+            font-family: 'Georgia', serif;
+        }
+
+        .logo span { color: var(--gold); }
+
+        nav {
+            display: flex;
+            gap: 35px;
+        }
+
+        nav a {
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--maroon);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--maroon);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--maroon-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 21, 56, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--maroon);
+            border-color: var(--maroon);
+        }
+
+        .btn-secondary:hover {
+            background: var(--maroon);
+            color: white;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-family: 'Georgia', serif;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--gold-light);
+            margin-bottom: 10px;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        /* ===== SEARCH BOX ===== */
+        .search-box {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            max-width: 1100px;
+            margin: -50px auto 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box h3 {
+            text-align: center;
+            color: var(--maroon);
+            margin-bottom: 30px;
+            font-size: 22px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 7px;
+            font-size: 13px;
+        }
+
+        .form-group select,
+        .form-group input {
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 5px rgba(201, 168, 76, 0.2);
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats {
+            background: var(--maroon);
+            color: white;
+            padding: 60px 20px;
+            margin-top: 0;
+        }
+
+        .stats-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-it-works {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .how-it-works-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--maroon);
+            margin-bottom: 50px;
+            font-family: 'Georgia', serif;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .step-box {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--maroon);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step-box h3 {
+            color: var(--maroon);
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .step-box p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== FEATURED PROFILES ===== */
+        .featured {
+            padding: 80px 20px;
+            background: var(--cream);
+        }
+
+        .featured-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(139, 21, 56, 0.15);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--maroon) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+        }
+
+        .profile-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--gold);
+            color: var(--maroon);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .profile-info {
+            padding: 18px;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 5px;
+        }
+
+        .profile-details {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .profile-btn {
+            width: 100%;
+            padding: 8px;
+            background: var(--maroon);
+            color: white;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ===== WHY CHOOSE US ===== */
+        .why-us {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .why-us-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-box {
+            padding: 35px;
+            background: var(--cream);
+            border-radius: 10px;
+            border-left: 5px solid var(--gold);
+        }
+
+        .feature-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .feature-box h3 {
+            color: var(--maroon);
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .feature-box p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== SUCCESS STORIES ===== */
+        .stories {
+            padding: 80px 20px;
+            background: var(--cream);
+        }
+
+        .stories-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .story-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            border-top: 4px solid var(--gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .story-couple-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 12px;
+        }
+
+        .story-text {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .story-date {
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .testimonials-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            padding: 30px;
+            background: var(--cream);
+            border-radius: 10px;
+            border-left: 4px solid var(--maroon);
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--maroon);
+            font-size: 14px;
+        }
+
+        .testimonial-role {
+            font-size: 12px;
+            color: var(--gold);
+        }
+
+        /* ===== BLOG/NEWS ===== */
+        .blog {
+            padding: 80px 20px;
+            background: var(--cream);
+        }
+
+        .blog-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--maroon) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .blog-info {
+            padding: 20px;
+        }
+
+        .blog-title {
+            color: var(--maroon);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .blog-date {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ===== PRICING ===== */
+        .pricing {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .pricing-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .price-card {
+            background: var(--cream);
+            padding: 35px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            border-color: var(--gold);
+            transform: scale(1.05);
+        }
+
+        .price-card.featured {
+            background: var(--maroon);
+            color: white;
+        }
+
+        .price-card.featured .price-title {
+            color: var(--gold);
+        }
+
+        .price-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 15px;
+        }
+
+        .price-amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .price-list {
+            text-align: left;
+            margin: 25px 0;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .price-list li {
+            list-style: none;
+            color: inherit;
+        }
+
+        .price-list li:before {
+            content: "✓ ";
+            color: var(--gold);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* ===== SUPPORT TEAM ===== */
+        .support {
+            padding: 80px 20px;
+            background: var(--cream);
+        }
+
+        .support-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .support-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .support-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--maroon) 100%);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .support-name {
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 5px;
+        }
+
+        .support-role {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        /* ===== FAQ ===== */
+        .faq {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .faq-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: var(--cream);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--maroon);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            color: var(--text-light);
+            display: none;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8933e 100%);
+            color: var(--maroon);
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 40px;
+            font-family: 'Georgia', serif;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 20px 30px;
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            color: #aaa;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav { gap: 15px; font-size: 14px; }
+            .hero h1 { font-size: 32px; }
+            .search-form { grid-template-columns: 1fr; }
+            .stats-content { grid-template-columns: 1fr 1fr; }
+            .steps-grid, .features-grid, .profile-grid, .stories-grid, .blog-grid, .pricing-grid, .support-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="top-bar-left">
+                <a href="tel:+12345678900">📞 +1 (234) 567-8900</a>
+                <a href="mailto:support@indianheartsusa.com">✉️ support@indianheartsusa.com</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="#fb">Facebook</a>
+                <a href="#tw">Twitter</a>
+                <a href="#ig">Instagram</a>
+                <a href="#wa">WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo">💒 Indian<span>Hearts</span> USA</div>
+            <nav>
+                <a href="#how">How It Works</a>
+                <a href="#features">Why Us</a>
+                <a href="#profiles">Profiles</a>
+                <a href="#stories">Stories</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="header-buttons">
+                <button class="btn btn-secondary">Sign In</button>
+                <button class="btn btn-primary">Join Free</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">🎉 Find Love in America</div>
+            <h1>Your Perfect Match Awaits</h1>
+            <p class="hero-desc">Connect with like-minded singles from the Indian diaspora. 50,000+ members, 10,000+ success stories</p>
+        </div>
+    </section>
+
+    <!-- SEARCH BOX -->
+    <div class="search-box">
+        <h3>🔍 Find Your Perfect Match</h3>
+        <form class="search-form">
+            <div class="form-group">
+                <label>Looking For</label>
+                <select>
+                    <option>Groom</option>
+                    <option>Bride</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Religion</label>
+                <select>
+                    <option>Any</option>
+                    <option>Hindu</option>
+                    <option>Muslim</option>
+                    <option>Christian</option>
+                    <option>Sikh</option>
+                    <option>Jain</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Age Range</label>
+                <select>
+                    <option>Any</option>
+                    <option>18-25</option>
+                    <option>25-30</option>
+                    <option>30-40</option>
+                    <option>40+</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>City/State</label>
+                <input type="text" placeholder="e.g. San Francisco, CA">
+            </div>
+            <button type="submit" class="btn btn-primary">Search Now</button>
+        </form>
+    </div>
+
+    <!-- STATS SECTION -->
+    <section class="stats">
+        <div class="stats-content">
+            <div class="stat-item">
+                <div class="stat-number">50,000+</div>
+                <div class="stat-label">Active Members</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Success Stories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Verified Profiles</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Customer Support</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works" id="how">
+        <div class="how-it-works-content">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <h3>Register Free</h3>
+                    <p>Create your profile in just 2 minutes with basic details and photos</p>
+                </div>
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <h3>Get Verified</h3>
+                    <p>Complete verification process to build trust in our community</p>
+                </div>
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <h3>Find Matches</h3>
+                    <p>Browse profiles and get AI-powered recommendations daily</p>
+                </div>
+                <div class="step-box">
+                    <div class="step-number">4</div>
+                    <h3>Connect & Meet</h3>
+                    <p>Message, video call, and meet your potential life partner</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED PROFILES -->
+    <section class="featured" id="profiles">
+        <div class="featured-content">
+            <h2 class="section-title">Featured Profiles</h2>
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <div class="profile-image">
+                        👰
+                        <div class="profile-badge">Premium</div>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">Priya, 28</div>
+                        <div class="profile-details">Hindu • California • Doctor</div>
+                        <button class="profile-btn">View Profile</button>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-image">
+                        🤵
+                        <div class="profile-badge">Featured</div>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">Raj, 32</div>
+                        <div class="profile-details">Hindu • New York • Engineer</div>
+                        <button class="profile-btn">View Profile</button>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-image">
+                        👰
+                        <div class="profile-badge">Premium</div>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">Deepika, 26</div>
+                        <div class="profile-details">Muslim • Texas • Lawyer</div>
+                        <button class="profile-btn">View Profile</button>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-image">
+                        🤵
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">Amit, 30</div>
+                        <div class="profile-details">Hindu • Florida • Consultant</div>
+                        <button class="profile-btn">View Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="why-us" id="features">
+        <div class="why-us-content">
+            <h2 class="section-title">Why Choose IndianHearts USA?</h2>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Matching</h3>
+                    <p>AI-powered compatibility algorithm matches you with perfect profiles based on interests, values, and preferences</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>100% Safe & Secure</h3>
+                    <p>Verified profiles, encrypted messaging, and fraud detection to keep you protected</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">💬</div>
+                    <h3>Easy Communication</h3>
+                    <p>Connect instantly with chat, audio calls, and video calls built into the platform</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Premium Features</h3>
+                    <p>Exclusive access to analytics, priority matching, and featured listing for premium members</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">👨‍👩‍👧</div>
+                    <h3>Family Involvement</h3>
+                    <p>Invite parents or siblings to help in the matchmaking journey with full transparency</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">📊</div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Track profile views, see who's interested, and get insights to improve your chances</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUCCESS STORIES -->
+    <section class="stories" id="stories">
+        <div class="stories-content">
+            <h2 class="section-title">💑 Success Stories</h2>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <div class="story-couple-name">Raj & Priya</div>
+                    <div class="story-text">"We met on IndianHearts and instantly connected. After 6 months, Raj proposed with family blessing. Now happily married with the best support from this wonderful platform!"</div>
+                    <div class="story-date">🗓️ Married June 2024</div>
+                </div>
+                <div class="story-card">
+                    <div class="story-couple-name">Amit & Deepika</div>
+                    <div class="story-text">"As a busy professional, I didn't have time to meet anyone traditional. This platform made it effortless to find someone who truly understands me. We're getting married next month!"</div>
+                    <div class="story-date">🗓️ Getting Married Jan 2025</div>
+                </div>
+                <div class="story-card">
+                    <div class="story-couple-name">Arjun & Isha</div>
+                    <div class="story-text">"Long-distance relationship turned into forever! The matching algorithm was so accurate for us. Now planning our wedding and couldn't be happier!"</div>
+                    <div class="story-date">🗓️ Married Oct 2024</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+        <div class="testimonials-content">
+            <h2 class="section-title">What Members Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Best matrimony app I've used! The profiles are authentic, the matching is accurate, and the support team is incredibly helpful. Highly recommended!"</div>
+                    <div class="testimonial-author">Neha Sharma</div>
+                    <div class="testimonial-role">Premium Member • California</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Finally found a platform that understands Indian culture and values. The horoscope matching feature was exactly what my parents wanted. Great experience!"</div>
+                    <div class="testimonial-author">Vikram Patel</div>
+                    <div class="testimonial-role">Elite Member • New York</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Safe, secure, and genuinely effective. I've made some great friends on this platform even before I met my now-fiancé. Worth every penny!"</div>
+                    <div class="testimonial-author">Anjali Gupta</div>
+                    <div class="testimonial-role">Premium Member • Texas</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"The family involvement feature was perfect for us. My parents were involved throughout and felt comfortable. This is truly a family matrimony platform!"</div>
+                    <div class="testimonial-author">Rohan Nair</div>
+                    <div class="testimonial-role">Premium Member • Florida</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG/NEWS -->
+    <section class="blog" id="blog">
+        <div class="blog-content">
+            <h2 class="section-title">Latest from Our Blog</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">📝</div>
+                    <div class="blog-info">
+                        <div class="blog-title">The Perfect First Message: How to Stand Out</div>
+                        <div class="blog-date">📅 June 8, 2026</div>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">💕</div>
+                    <div class="blog-info">
+                        <div class="blog-title">Red Flags to Watch for in Online Dating</div>
+                        <div class="blog-date">📅 June 5, 2026</div>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">💍</div>
+                    <div class="blog-info">
+                        <div class="blog-title">Wedding Planning 101: Tips from Our Success Stories</div>
+                        <div class="blog-date">📅 June 1, 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing">
+        <div class="pricing-content">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="price-title">Free</div>
+                    <div class="price-amount">$0</div>
+                    <p>Forever</p>
+                    <ul class="price-list">
+                        <li>Browse profiles</li>
+                        <li>Create basic profile</li>
+                        <li>Send 3 interests/day</li>
+                        <li>5 messages/day</li>
+                        <li>View last 10 visitors</li>
+                    </ul>
+                    <button class="btn btn-secondary">Get Started</button>
+                </div>
+                <div class="price-card featured">
+                    <div class="price-title">Premium</div>
+                    <div class="price-amount">$9.99</div>
+                    <p>Per Month</p>
+                    <ul class="price-list">
+                        <li>Unlimited interests</li>
+                        <li>Unlimited messages</li>
+                        <li>Video calls</li>
+                        <li>View all visitors</li>
+                        <li>See who liked you</li>
+                        <li>Priority customer support</li>
+                    </ul>
+                    <button class="btn btn-primary">Choose Plan</button>
+                </div>
+                <div class="price-card">
+                    <div class="price-title">Elite</div>
+                    <div class="price-amount">$19.99</div>
+                    <p>Per Month</p>
+                    <ul class="price-list">
+                        <li>All Premium features</li>
+                        <li>Featured profile listing</li>
+                        <li>Detailed analytics</li>
+                        <li>AI match recommendations</li>
+                        <li>Personal advisor</li>
+                        <li>Priority support 24/7</li>
+                    </ul>
+                    <button class="btn btn-secondary">Choose Plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUPPORT TEAM -->
+    <section class="support">
+        <div class="support-content">
+            <h2 class="section-title">Our Expert Support Team</h2>
+            <div class="support-grid">
+                <div class="support-card">
+                    <div class="support-avatar">👩</div>
+                    <div class="support-name">Priya Sharma</div>
+                    <div class="support-role">Senior Relationship Advisor</div>
+                    <p style="font-size: 13px; color: #666; margin-top: 10px;">Ask your questions and get personalized guidance for your matrimony journey</p>
+                    <button class="btn btn-primary" style="margin-top: 15px; width: 100%; background: var(--maroon);">Contact Priya</button>
+                </div>
+                <div class="support-card">
+                    <div class="support-avatar">👨</div>
+                    <div class="support-name">Raj Patel</div>
+                    <div class="support-role">Community Manager</div>
+                    <p style="font-size: 13px; color: #666; margin-top: 10px;">Need help navigating our platform? I'm here to assist you every step</p>
+                    <button class="btn btn-primary" style="margin-top: 15px; width: 100%; background: var(--maroon);">Contact Raj</button>
+                </div>
+                <div class="support-card">
+                    <div class="support-avatar">👩</div>
+                    <div class="support-name">Anjali Kumar</div>
+                    <div class="support-role">Safety & Trust Officer</div>
+                    <p style="font-size: 13px; color: #666; margin-top: 10px;">Your safety is our priority. Report any concerns to me anytime</p>
+                    <button class="btn btn-primary" style="margin-top: 15px; width: 100%; background: var(--maroon);">Contact Anjali</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="faq-content">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item active">
+                <div class="faq-question">
+                    Is my profile information safe and secure?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! We use industry-leading encryption and never share your personal information without consent. All profiles go through our verification system to ensure authenticity.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    How does the matching algorithm work?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Our AI algorithm considers religion, location, age preferences, education, profession, horoscope compatibility, lifestyle choices, and more to match you with ideal profiles.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I cancel my premium subscription anytime?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! You can cancel your subscription anytime without any penalties. Your account will revert to Free tier at the end of your billing cycle.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What makes IndianHearts different from other matrimony apps?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    We combine modern technology with Indian cultural values. Our features like family involvement, horoscope matching, and community success stories make us unique.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2>Ready to Find Your Perfect Match?</h2>
+            <p>Join 50,000+ singles looking for meaningful relationships. Sign up free today!</p>
+            <button class="btn btn-primary" style="background: var(--maroon); color: white; padding: 14px 40px; font-size: 16px;">Join Now - It's Free!</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#about">About IndianHearts</a></li>
+                        <li><a href="#team">Our Team</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#press">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#cookies">Cookie Policy</a></li>
+                        <li><a href="#safety">Safety Tips</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#fb">Facebook</a></li>
+                        <li><a href="#tw">Twitter</a></li>
+                        <li><a href="#ig">Instagram</a></li>
+                        <li><a href="#yt">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 IndianHearts USA. All rights reserved. | Made with ❤️ for Indian diaspora</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
