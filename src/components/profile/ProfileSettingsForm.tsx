@@ -228,10 +228,10 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
       {/* Horoscope */}
       <div className="traditional-card rounded-xl p-6">
         <h2 className="font-bold text-lg mb-4" style={{ fontFamily: 'var(--font-playfair)', color: 'var(--maroon)' }}>Horoscope (Optional)</h2>
-        <p className="text-xs opacity-60 mb-3">Upload your horoscope/birth chart as an image or PDF</p>
         <div className="flex items-center gap-4">
           <div className="flex-1">
-            <label className="block text-xs font-medium opacity-60 mb-2">Horoscope File</label>
+            <label className="block text-xs font-medium opacity-60 mb-1">Horoscope File</label>
+            <p className="text-xs opacity-50 mb-2">Accepted formats: JPG, PNG, PDF &nbsp;·&nbsp; Max size: 10 MB</p>
             <input
               type="file"
               accept="image/*,.pdf"
@@ -243,10 +243,15 @@ export default function ProfileSettingsForm({ profile }: { profile: Profile }) {
             {horoscopeUploading && <p className="text-xs mt-1 opacity-60">Uploading…</p>}
             {horoscopeUrl && !horoscopeUploading && <p className="text-xs mt-1 text-green-600">✓ Horoscope uploaded</p>}
           </div>
-          {horoscopeUrl && (
+          {horoscopeUrl ? (
             <a href={horoscopeUrl} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold px-3 py-2 rounded border shrink-0" style={{ borderColor: 'var(--maroon)', color: 'var(--maroon)' }}>
-              View Current
+              View Horoscope
             </a>
+          ) : (
+            <label className="text-xs font-semibold px-3 py-2 rounded border shrink-0 cursor-pointer" style={{ borderColor: 'var(--maroon)', color: 'var(--maroon)' }}
+              onClick={() => (document.querySelector('input[accept="image/*,.pdf"]') as HTMLInputElement)?.click()}>
+              Upload Horoscope
+            </label>
           )}
         </div>
       </div>
